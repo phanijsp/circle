@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_grey_bg_light"
+    tools:context=".postlogin.postlogingmainactivity">
+
+    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
+        android:id="@+id/top_navigation_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:elevation="12dp"
+        android:padding="12dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_active="true"
+              app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/default_inactive"
+            app:bt_icon="@drawable/inbox"
+            app:bt_padding="12dp"
+            app:bt_shape="@drawable/transition_background_drawable_default"
+            app:bt_title="Inbox"
+
+            app:bt_titlePadding="8dp"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/default_inactive"
+            app:bt_icon="@drawable/ic_dashboard_black_24dp"
+            app:bt_padding="12dp"
+            app:bt_shape="@drawable/transition_background_drawable_default"
+            app:bt_title="Timeline"
+            app:bt_titlePadding="8dp"/>
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/c_item_happy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorInactive="@color/default_inactive"
+
+            app:bt_icon="@drawable/ic_person"
+            app:bt_padding="12dp"
+            app:bt_shape="@drawable/transition_background_drawable_default"
+            app:bt_title="Account"
+            app:bt_titlePadding="8dp"/>
+    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
