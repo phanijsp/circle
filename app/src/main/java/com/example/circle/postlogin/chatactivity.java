@@ -319,7 +319,7 @@ public class chatactivity extends AppCompatActivity {
     public void pushmessagetoserver(final String pushmessage, final String pushmessagetype, final String sender, final String desgroup, final String time){
             MyRequestQueue  = Volley.newRequestQueue(this);
             String url =
-                    "http://phantomassassin.tk/php_files/ayvarservice/pushmessagetoserver.php";
+                    "http://93.188.165.250/php_files/ayvarservice/pushmessagetoserver.php";
             StringRequest MyStringRequest =
                     new StringRequest(
                             Request.Method.POST,

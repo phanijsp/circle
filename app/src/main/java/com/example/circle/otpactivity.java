@@ -76,7 +76,7 @@ public class otpactivity extends AppCompatActivity {
 
   public void callvolly() {
     RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
-    String url = "http://phantomassassin.tk/php_files/sample.php"; // <----enter your post url here
+    String url = "http://93.188.165.250/php_files/sample.php"; // <----enter your post url here
     StringRequest MyStringRequest =
         new StringRequest(
             Request.Method.POST,
@@ -123,7 +123,7 @@ public class otpactivity extends AppCompatActivity {
   public void registerstudent() {
     RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
     String url =
-        "http://phantomassassin.tk/php_files/studentregister.php"; // <----enter your post url here
+        "http://93.188.165.250/php_files/studentregister.php"; // <----enter your post url here
     StringRequest MyStringRequest =
         new StringRequest(
             Request.Method.POST,
@@ -173,7 +173,7 @@ public class otpactivity extends AppCompatActivity {
   public void registerfaculty() {
     RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
     String url =
-        "http://phantomassassin.tk/php_files/facultyregister.php"; // <----enter your post url here
+        "http://93.188.165.250/php_files/facultyregister.php"; // <----enter your post url here
     StringRequest MyStringRequest =
         new StringRequest(
             Request.Method.POST,

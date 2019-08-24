@@ -48,7 +48,7 @@ public class xcx extends Service {
     private RequestQueue mRequestQueue;
     String FLAG;
     private StringRequest mStringRequest;
-    private String url = "http://phantomassassin.tk/php_files/studentlogincheck.php";
+    private String url = "http://93.188.165.250/php_files/studentlogincheck.php";
     public SQLiteHelper sqLiteHelper;
     RequestQueue MyRequestQueue;
     StringRequest MyStringRequest;
@@ -171,7 +171,7 @@ public void  InitializeGroupObjects(){
 
     private void pushtoserver(final String groupname) {
 
-        String url = "http://phantomassassin.tk/php_files/ayvarservice/getmessages.php";
+        String url = "http://93.188.165.250/php_files/ayvarservice/getmessages.php";
         MyStringRequest =
                 new StringRequest(
                         Request.Method.POST,

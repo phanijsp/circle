@@ -625,7 +625,7 @@ public class MainActivity extends AppCompatActivity {
   public void logincheck(final String loginmail, final String loginpassword) {
     RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
     String url =
-        "http://phantomassassin.tk/php_files/logincheck.php"; // <----enter your post url here
+        "http://93.188.165.250/php_files/logincheck.php"; // <----enter your post url here
     StringRequest MyStringRequest =
         new StringRequest(
             Request.Method.POST,
@@ -670,7 +670,7 @@ public class MainActivity extends AppCompatActivity {
   public void Student_logincheck(final String loginmail, final String loginpassword) {
     RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
     String url =
-        "http://phantomassassin.tk/php_files/studentlogincheck.php"; // <----enter your post url
+        "http://93.188.165.250/php_files/studentlogincheck.php"; // <----enter your post url
     // here
     StringRequest MyStringRequest =
         new StringRequest(
@@ -801,7 +801,7 @@ public class MainActivity extends AppCompatActivity {
   public void Faculty_logincheck(final String loginmail, final String loginpassword) {
     RequestQueue MyRequestQueue = Volley.newRequestQueue(this);
     String url =
-        "http://phantomassassin.tk/php_files/facultylogincheck.php"; // <----enter your post url
+        "http://93.188.165.250/php_files/facultylogincheck.php"; // <----enter your post url
     // here
     StringRequest MyStringRequest =
         new StringRequest(

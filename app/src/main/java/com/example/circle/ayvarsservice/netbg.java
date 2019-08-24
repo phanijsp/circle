@@ -52,7 +52,7 @@ class netbg extends AsyncTask<String, String, String> {
     protected String doInBackground(String... params2) {
         URL url = null;
         try {
-            url = new URL("http://phantomassassin.tk/php_files/ayvarservice/getmessages.php");
+            url = new URL("http://93.188.165.250/php_files/ayvarservice/getmessages.php");
             Map<String,Object> params = new LinkedHashMap<>();
             params.put("groupname", param1);
             params.put("messageid", param2);

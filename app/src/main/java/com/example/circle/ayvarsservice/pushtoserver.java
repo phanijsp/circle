@@ -30,7 +30,7 @@ import static java.lang.Boolean.FALSE;
 public class pushtoserver   extends Thread {
     int messageid=0;
     String groupname;
-    String url = "http://phantomassassin.tk/php_files/ayvarservice/getmessages.php";
+    String url = "http://93.188.165.250/php_files/ayvarservice/getmessages.php";
     StringRequest mStringRequest;
     RequestQueue mRequestQueue;
     RequestFuture mRequestFuture;

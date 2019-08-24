@@ -178,7 +178,7 @@ public class Fragment1 extends Fragment {
     Log.i("huh", "I am in push id  groupid : " + String.valueOf(id) + " ? ");
 
     String url =
-        "http://phantomassassin.tk/php_files/getgroups2.php"; // <----enter your post url here
+        "http://93.188.165.250/php_files/getgroups2.php"; // <----enter your post url here
     StringRequest MyStringRequest =
         new StringRequest(
             Request.Method.POST,
