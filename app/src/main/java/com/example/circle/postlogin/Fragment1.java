@@ -72,10 +72,16 @@ public class Fragment1 extends Fragment {
     while (cursor3.moveToNext()) {
       try {
         groupname = cursor3.getString(1);
+        Log.i("firsttime",groupname);
         StringTokenizer stringTokenizer = new StringTokenizer(groupname, ".");
         groupslist.add(new Groups(stringTokenizer.nextToken(), stringTokenizer.nextToken()));
       } catch (Exception e) {
 
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        String sStackTrace = sw.toString(); // stack trace as a string
+        Log.i("firsttime",sStackTrace);
       }
     }
 
