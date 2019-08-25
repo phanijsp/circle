@@ -105,8 +105,8 @@ public class SensorService extends Service {
 
     private Timer timer;
     private TimerTask timerTask;
-    ArrayList<String> groupslistfinal1 = new ArrayList<String>();
-    ArrayList<String> groupslistfinal2 = new ArrayList<String>();
+
+    ArrayList<pushtoserver> pushtoservers = new ArrayList<pushtoserver>();
 
     public void startTimer() {
         Log.i("MYLOC", "startTimer");
@@ -117,17 +117,19 @@ public class SensorService extends Service {
     }
 
     public void initializeTimerTask() {
+        final ArrayList<String>[] groupslistfinal1 = new ArrayList[]{new ArrayList<String>()};
+        final ArrayList<String>[] groupslistfinal2 = new ArrayList[]{new ArrayList<String>()};
         Log.i("MYLOC", "Initialize timer task");
         timerTask =
                 new TimerTask() {
                     public void run() {
-                        groupslistfinal1 = new ArrayList<String>();
+                        groupslistfinal1[0] = new ArrayList<String>();
                         String groupname = "";
                         try {
                             cursor = sqLiteHelper.getData("SELECT * FROM groups");
                             while (cursor.moveToNext()) {
                                 groupname = cursor.getString(1);
-                                groupslistfinal1.add(groupname);
+                                groupslistfinal1[0].add(groupname);
                             }
                         } catch (Exception e) {
                             StringWriter stringWriter = new StringWriter();
@@ -136,12 +138,20 @@ public class SensorService extends Service {
                             String sStackTrace = stringWriter.toString();
                             Log.i("data", sStackTrace);
                         }
-                        String equality = AreGroupsFinalEqual(groupslistfinal1,groupslistfinal2);
+                        String equality = AreGroupsFinalEqual(groupslistfinal1[0], groupslistfinal2[0]);
                         if(equality.equals("YES")){
                         }
                         else if(equality.equals("NO")){
-                            groupslistfinal2 = groupslistfinal1;
-                            InitializeThreadObjects(groupslistfinal1);
+                            ArrayList<String> x = new ArrayList<String>(groupslistfinal1[0]);
+                            Log.i("YouFoundIt", x.toString()+"\n"+ groupslistfinal1[0]);
+                            ArrayList<String> y =new ArrayList<String>(groupslistfinal1[0]);
+                            ArrayList<String> z=new ArrayList<String>(groupslistfinal2[0]);
+                            CreateNewThreadObjects(groupslistfinal1[0], groupslistfinal2[0]);
+                            DeleteOldThreadObjects(y,z);
+                            Log.i("YouFoundIt", x.toString()+"\n"+ groupslistfinal1[0]);
+                            groupslistfinal2[0] = x;
+                            Log.i("IfoundYou", groupslistfinal2[0].toString()+"\n"+ groupslistfinal1[0]);
+//                            InitializeThreadObjects(groupslistfinal1);
                         }
                     }
                 };
@@ -153,7 +163,42 @@ public class SensorService extends Service {
             return "YES";
         }
         else{
+            Log.i("AreGroupsEqualxno",groupslistfinal1x.toString()+"\n"+groupslistfinal2x.toString());
             return "NO";
+        }
+    }
+    public void CreateNewThreadObjects(ArrayList<String> groupslistfinaly1,ArrayList<String> groupslistfinaly2){
+        ArrayList<String> groupslistfinalx1=new ArrayList<String>();
+        ArrayList<String> groupslistfinalx2 = new ArrayList<String>();
+        groupslistfinalx1=groupslistfinaly1;
+        groupslistfinalx2=groupslistfinaly2;
+        for (int i = 0; i < groupslistfinalx2.size(); i++) {
+            for(int j = 0; j<groupslistfinalx1.size(); j++){
+                if(groupslistfinalx1.get(j).equals(groupslistfinalx2.get(i))){
+                    groupslistfinalx1.remove(j);
+
+                }
+            }
+        }
+        if(groupslistfinalx1.size()>0){
+            Log.i("AreGroupsEqualxnoincrtn",groupslistfinalx1.toString());
+            InitializeThreadObjects(groupslistfinalx1);
+        }
+    }
+    public void DeleteOldThreadObjects(ArrayList<String> groupslistfinal1,ArrayList<String> groupslistfinal2){
+        for(int i = 0 ; i< groupslistfinal1.size(); i++){
+            for(int j = 0 ; j< groupslistfinal2.size();j++){
+                if(groupslistfinal2.get(j).equals(groupslistfinal1.get(i))){
+                    groupslistfinal2.remove(j);
+                }
+            }
+        }
+        if(groupslistfinal2.size()>0){
+            Log.i("AreGroupsEqualxnoindelo",groupslistfinal2.toString());
+            FinalizeThreadObjects(groupslistfinal2);
+        }else{
+            Log.i("AreGroupsEqualxnodelno",groupslistfinal2.toString());
+
         }
     }
     public void InitializeThreadObjects(ArrayList<String> groupslistfinalx){
@@ -162,9 +207,21 @@ public class SensorService extends Service {
                     StringTokenizer stringTokenizer = new StringTokenizer(groupslistfinalx.get(i), ".");
                     String groupname = stringTokenizer.nextToken()+stringTokenizer.nextToken();
                     pushgroups[i] = new pushtoserver(groupname,sqLiteHelper,this);
+                    pushtoservers.add(pushgroups[i]);
                     pushgroups[i].start();
+                    pushgroups[i].setName(groupname);
                 }
 
+    }
+    public void FinalizeThreadObjects(ArrayList<String> groupslistfinalx){
+                for(int i = 0;i< groupslistfinalx.size();i++){
+                    for(int j = 0; j<pushtoservers.size();j++){
+                        pushtoserver pushtoserver = pushtoservers.get(j);
+                        if(pushtoserver.getName().equals(groupslistfinalx.get(i))){
+                            pushtoserver.stopthread();
+                        }
+                    }
+                }
     }
 
     public void stoptimertask() {

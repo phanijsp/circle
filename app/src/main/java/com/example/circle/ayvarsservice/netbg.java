@@ -3,6 +3,7 @@ package com.example.circle.ayvarsservice;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -38,6 +39,16 @@ class netbg extends AsyncTask<String, String, String> {
     SQLiteHelper sqLiteHelper;
     Context context;
     ProgressDialog progressDialog;
+    static String stop="FALSE";
+
+    public static String getStop() {
+        return stop;
+    }
+
+    public static void setStop(String stop) {
+        netbg.stop = stop;
+    }
+
     public netbg(String param1, String param2, Context context, SQLiteHelper sqLiteHelper){
         this.param1=param1;
         this.param2=param2;
@@ -99,66 +110,72 @@ class netbg extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(result==null){
-            Toast.makeText(context,"Network Error Occured !",Toast.LENGTH_SHORT).show();
-        }else{
-            if(result.equals("error")){
-                Log.i("ENDISHERE",result);
-            }
+       if(stop!="TRUE"){
+           Log.i("netbgbgbg","Running"+param1);
+           if(result==null){
+               Toast.makeText(context,"Network Error Occured !",Toast.LENGTH_SHORT).show();
+           }else{
+               if(result.equals("error")){
+                   Log.i("ENDISHERE",result);
+               }
 //        textView.setText(result);
-            JSONArray arr = null;
-            try {
-                JSONObject obj = new JSONObject(result);
-                arr = obj.getJSONArray("messages");
+               JSONArray arr = null;
+               try {
+                   JSONObject obj = new JSONObject(result);
+                   arr = obj.getJSONArray("messages");
 
-                for (int i = 0; i < arr.length(); i++) {
+                   for (int i = 0; i < arr.length(); i++) {
 
-                    JSONObject jsonProductObject = arr.getJSONObject(i);
-                    String messagevalue = jsonProductObject.getString("messagevalue");
-                    String messagetype = jsonProductObject.getString("messagetype");
-                    String sender = jsonProductObject.getString("sender");
-                    String time = jsonProductObject.getString("time");
-                    Log.i("dataxx:", messagevalue + "  " + messagetype + "  " + sender + " "+i+" "+arr.length()+param1+param2);
-                    String groupname = param1;
+                       JSONObject jsonProductObject = arr.getJSONObject(i);
+                       String messagevalue = jsonProductObject.getString("messagevalue");
+                       String messagetype = jsonProductObject.getString("messagetype");
+                       String sender = jsonProductObject.getString("sender");
+                       String time = jsonProductObject.getString("time");
+                       Log.i("dataxx:", messagevalue + "  " + messagetype + "  " + sender + " "+i+" "+arr.length()+param1+param2);
+                       String groupname = param1;
 
 
-                    try {
-                        sqLiteHelper.queryData(
-                                "INSERT INTO q"
-                                        + groupname
-                                        + "(sender,messagetype,messagevalue,time) VALUES('"
-                                        + sender
-                                        + "','"
-                                        + messagetype
-                                        + "','"
-                                        + messagevalue
-                                        + "','"
-                                        + time
-                                        + "')");
-                        Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
+                       try {
+                           sqLiteHelper.queryData(
+                                   "INSERT INTO q"
+                                           + groupname
+                                           + "(sender,messagetype,messagevalue,time) VALUES('"
+                                           + sender
+                                           + "','"
+                                           + messagetype
+                                           + "','"
+                                           + messagevalue
+                                           + "','"
+                                           + time
+                                           + "')");
+                           Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
 
-                    } catch (Exception e) {
-                        StringWriter sw = new StringWriter();
-                        PrintWriter pw = new PrintWriter(sw);
-                        e.printStackTrace(pw);
-                        String sStackTrace = sw.toString(); // stack trace as a string
-                        System.out.println(sStackTrace);
-                        Log.i("Sql error", sStackTrace);
-                    }
-                    //            } catch (JSONException e1) {
-                    //            e1.printStackTrace();
+                       } catch (Exception e) {
+                           StringWriter sw = new StringWriter();
+                           PrintWriter pw = new PrintWriter(sw);
+                           e.printStackTrace(pw);
+                           String sStackTrace = sw.toString(); // stack trace as a string
+                           System.out.println(sStackTrace);
+                           Log.i("Sql error", sStackTrace);
+                       }
+                       //            } catch (JSONException e1) {
+                       //            e1.printStackTrace();
 
-                }
-                int messageid=getmessageid();
-                netbg netc = new netbg(param1,String.valueOf(messageid),context,sqLiteHelper);
-                netc.execute();
-            } catch (JSONException e) {
-                int messageid=getmessageid();
-                netbg netc = new netbg(param1,String.valueOf(messageid),context,sqLiteHelper);
-                netc.execute();
-                e.printStackTrace();
-            }
-        }
+                   }
+                   int messageid=getmessageid();
+                   netbg netc = new netbg(param1,String.valueOf(messageid),context,sqLiteHelper);
+                   netc.execute();
+               } catch (JSONException e) {
+                   int messageid=getmessageid();
+                   netbg netc = new netbg(param1,String.valueOf(messageid),context,sqLiteHelper);
+                   netc.execute();
+                   e.printStackTrace();
+               }
+           }
+       }
+       else{
+           Log.i("netbgbgbg","Not running"+param1);
+       }
 
     }
     public int getmessageid(){

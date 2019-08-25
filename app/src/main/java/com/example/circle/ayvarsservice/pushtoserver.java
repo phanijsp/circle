@@ -36,6 +36,7 @@ public class pushtoserver   extends Thread {
     RequestFuture mRequestFuture;
     SQLiteHelper sqLiteHelper;
     Context context;
+    netbg netc;
 
 
     pushtoserver(String groupname, SQLiteHelper sqLiteHelper, Context context){
@@ -48,8 +49,11 @@ public class pushtoserver   extends Thread {
     public void  run(){
         int messageid2 = 0;
         messageid2 = getmessageid();
-        netbg netc = new netbg(groupname,String.valueOf(messageid2),context,sqLiteHelper);
+        netc = new netbg(groupname,String.valueOf(messageid2),context,sqLiteHelper);
         netc.execute();
+    }
+    public void stopthread(){
+        netbg.setStop("TRUE");
     }
 
 
