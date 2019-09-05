@@ -53,7 +53,7 @@ public class pushtoserver   extends Thread {
         netc.execute();
     }
     public void stopthread(){
-        netbg.setStop("TRUE");
+        netc.stop="TRUE";
     }
 
 

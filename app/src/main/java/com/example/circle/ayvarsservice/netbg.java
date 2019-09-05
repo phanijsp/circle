@@ -31,7 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
-class netbg extends AsyncTask<String, String, String> {
+public class netbg extends AsyncTask<String, String, String> {
 
     private String resp;
     String param1;
@@ -39,15 +39,9 @@ class netbg extends AsyncTask<String, String, String> {
     SQLiteHelper sqLiteHelper;
     Context context;
     ProgressDialog progressDialog;
-    static String stop="FALSE";
+    String stop="FALSE";
 
-    public static String getStop() {
-        return stop;
-    }
 
-    public static void setStop(String stop) {
-        netbg.stop = stop;
-    }
 
     public netbg(String param1, String param2, Context context, SQLiteHelper sqLiteHelper){
         this.param1=param1;
