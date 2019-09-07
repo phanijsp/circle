@@ -12,40 +12,22 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.circle.SQLiteHelper;
-import com.example.circle.postlogin.Groups;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.lang.Boolean.FALSE;
-
 public class SensorService extends Service {
 
     public static Cursor cursor;
-    String FLAG;
     public SQLiteHelper sqLiteHelper;
     RequestQueue MyRequestQueue;
 
@@ -62,7 +44,6 @@ public class SensorService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        FLAG = "DOWN";
         MyRequestQueue = Volley.newRequestQueue(this);
         sqLiteHelper = new SQLiteHelper(SensorService.this, "user.sqlite", null, 1);
         messageidhelper.setSqLiteHelper(sqLiteHelper);
