@@ -12,57 +12,41 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.circle.SQLiteHelper;
-import com.example.circle.postlogin.Groups;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static java.lang.Boolean.FALSE;
-
 public class SensorService extends Service {
 
     public static Cursor cursor;
-    String FLAG;
     public SQLiteHelper sqLiteHelper;
     RequestQueue MyRequestQueue;
-
     public SensorService(Context applicationContext) {
         super();
-        Log.i("HERE", "here I am!");
-        Log.i("serviceid", String.valueOf(this.getClass()));
-        Log.i("MYLOC", "constructor");
     }
-
     public SensorService() {
     }
 
     @Override
     public void onCreate() {
+        Log.i("OnCreate","In OnCreate");
         super.onCreate();
-        FLAG = "DOWN";
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i("OnStart","In OnStart");
+
+        //cut from onCreate to test
         MyRequestQueue = Volley.newRequestQueue(this);
         sqLiteHelper = new SQLiteHelper(SensorService.this, "user.sqlite", null, 1);
         messageidhelper.setSqLiteHelper(sqLiteHelper);
@@ -83,11 +67,6 @@ public class SensorService extends Service {
 
             startForeground(1, notification);
         }
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("MYLOC", "Service onstart");
         super.onStartCommand(intent, flags, startId);
         startTimer();
         return START_STICKY;
@@ -95,8 +74,8 @@ public class SensorService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.i("OnDestroy","Destroyed !");
         super.onDestroy();
-        Log.i("MYLOC", "ondestroy!");
         Intent broadcastIntent =
                 new Intent(getApplicationContext(), SensorRestarterBroadcastReceiver.class);
         sendBroadcast(broadcastIntent);
@@ -109,8 +88,6 @@ public class SensorService extends Service {
     ArrayList<pushtoserver> pushtoservers = new ArrayList<pushtoserver>();
 
     public void startTimer() {
-        Log.i("MYLOC", "startTimer");
-
         timer = new Timer();
         initializeTimerTask();
         timer.schedule(timerTask, 1000, 1000); //
@@ -119,7 +96,6 @@ public class SensorService extends Service {
     public void initializeTimerTask() {
         final ArrayList<String>[] groupslistfinal1 = new ArrayList[]{new ArrayList<String>()};
         final ArrayList<String>[] groupslistfinal2 = new ArrayList[]{new ArrayList<String>()};
-        Log.i("MYLOC", "Initialize timer task");
         timerTask =
                 new TimerTask() {
                     public void run() {
@@ -136,7 +112,6 @@ public class SensorService extends Service {
                             PrintWriter printWriter = new PrintWriter(stringWriter);
                             e.printStackTrace(printWriter);
                             String sStackTrace = stringWriter.toString();
-                            Log.i("data", sStackTrace);
                         }
                         String equality = AreGroupsFinalEqual(groupslistfinal1[0], groupslistfinal2[0]);
                         if(equality.equals("YES")){
@@ -148,9 +123,7 @@ public class SensorService extends Service {
                             ArrayList<String> z=new ArrayList<String>(groupslistfinal2[0]);
                             CreateNewThreadObjects(groupslistfinal1[0], groupslistfinal2[0]);
                             DeleteOldThreadObjects(y,z);
-                            Log.i("YouFoundIt", x.toString()+"\n"+ groupslistfinal1[0]);
                             groupslistfinal2[0] = x;
-                            Log.i("IfoundYou", groupslistfinal2[0].toString()+"\n"+ groupslistfinal1[0]);
 //                            InitializeThreadObjects(groupslistfinal1);
                         }
                     }
@@ -240,10 +213,10 @@ public class SensorService extends Service {
     @Override
     public void onTaskRemoved(Intent intent) {
         super.onDestroy();
-        Log.i("MYLOC", "ondestroy! in onTaskremoved");
+        Log.i("OnTaskRemoved", "ondestroy! in onTaskremoved");
         Intent broadcastIntent =
                 new Intent(getApplicationContext(), SensorRestarterBroadcastReceiver.class);
-//    sendBroadcast(broadcastIntent);
+        sendBroadcast(broadcastIntent);
         stoptimertask();
     }
 }

@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class netbg extends AsyncTask<String, String, String> {
 
-    private String resp;
+    private String resp="";
     String param1;
     String param2;
     SQLiteHelper sqLiteHelper;
