@@ -78,6 +78,14 @@ public class sendhelper extends AsyncTask<String,Integer,String> {
                         "saisampaths60@gmail.com",
                         getDommail());
             }
+            else if(getType().toString().equals("reset"))
+            {
+                i1=3;
+                sender.sendMail("New Login Details",
+                        "Domain Mail: " + getDommail().toString()+"\n"+"Password: "+ getPassword().toString(),
+                        "saisampaths60@gmail.com",
+                        getDommail());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,6 +106,10 @@ public class sendhelper extends AsyncTask<String,Integer,String> {
                     break;
             case 2: Toast.makeText(context,"OTP Sent Successfully",Toast.LENGTH_SHORT).show();
                     i=new Intent(context, otpactivity.class);
+                    context.startActivity(i);
+                    break;
+            case 3: Toast.makeText(context, "New Login Details Sent to Mail", Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent(context, MainActivity.class);
                     context.startActivity(i);
                     break;
         }
