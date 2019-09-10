@@ -1,15 +1,21 @@
 package com.example.circle.ayvarsservice;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.StringRequest;
+import com.example.circle.R;
 import com.example.circle.SQLiteHelper;
 
 import org.json.JSONArray;
@@ -26,6 +32,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,6 +48,7 @@ public class netbg extends AsyncTask<String, String, String> {
     ProgressDialog progressDialog;
     String stop="FALSE";
 
+static final int[] l = {2};
 
 
     public netbg(String param1, String param2, Context context, SQLiteHelper sqLiteHelper){
@@ -104,6 +112,7 @@ public class netbg extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String result) {
+
        if(stop!="TRUE"){
            Log.i("netbgbgbg","Running"+param1);
            if(result==null){
@@ -115,6 +124,7 @@ public class netbg extends AsyncTask<String, String, String> {
 //        textView.setText(result);
                JSONArray arr = null;
                try {
+
                    JSONObject obj = new JSONObject(result);
                    arr = obj.getJSONArray("messages");
 
@@ -127,7 +137,6 @@ public class netbg extends AsyncTask<String, String, String> {
                        String time = jsonProductObject.getString("time");
                        Log.i("dataxx:", messagevalue + "  " + messagetype + "  " + sender + " "+i+" "+arr.length()+param1+param2);
                        String groupname = param1;
-
 
                        try {
                            sqLiteHelper.queryData(
@@ -143,6 +152,30 @@ public class netbg extends AsyncTask<String, String, String> {
                                            + time
                                            + "')");
                            Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
+
+                           NotificationChannel channel = null;
+                           NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                               channel = new NotificationChannel("my_channel_01",
+                                       "Channel human readable title",
+                                       NotificationManager.IMPORTANCE_DEFAULT);
+                               mNotificationManager.createNotificationChannel(channel);
+                           }
+
+                           String messagevalue1=decodeStringUrl(messagevalue);
+
+                           Notification notification =
+                                   new NotificationCompat.Builder(context, "notify_001")
+                                           .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                           .setContentTitle(groupname)
+                                           .setContentText(sender + "->" + messagevalue1)
+                                           .setPriority(Notification.PRIORITY_HIGH)
+                                           .setDefaults(NotificationCompat.DEFAULT_SOUND)
+                                           .setChannelId("my_channel_01").build();
+                           mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                           mNotificationManager.notify(l[0], notification);
+                           l[0]++;
 
                        } catch (Exception e) {
                            StringWriter sw = new StringWriter();
@@ -203,6 +236,16 @@ public class netbg extends AsyncTask<String, String, String> {
         }
         Log.i("xcx",messageid+groupname);
         return messageid;
+    }
+
+    public static String decodeStringUrl(String encodedUrl) {
+        String decodedUrl =null;
+        try {
+            decodedUrl = URLDecoder.decode(encodedUrl, "UTF-8");
+        } catch (Exception e) {
+            return decodedUrl;
+        }
+        return decodedUrl;
     }
 
     @Override
