@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.circle.ForgotPassword.forgotreset;
 import com.example.circle.MailService.sendhelper;
 
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class otpactivity extends AppCompatActivity {
   Button verifybutton;
   EditText enteredotp;
   Intent i;
+  String type;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class otpactivity extends AppCompatActivity {
         new View.OnClickListener() {
           @Override
           public void onClick(View v) {
+              type=sendhelper.getType();
             String value = enteredotp.getText().toString();
             int count = 0;
             if (value.length() != 5) {
@@ -48,28 +51,48 @@ public class otpactivity extends AppCompatActivity {
               enteredotp.requestFocus();
               enteredotp.setError("Otp invalid");
             }
-            if (count == 0) {
-              if (otphelper.getOtpvalue() == Integer.parseInt(value)) {
+            if(type=="Signup")
+            {
+                if (count == 0) {
+                    if (otphelper.getOtpvalue() == Integer.parseInt(value)) {
 
-                sendhelper.setType("Registered");
-                sendhelper.setDommail(Registrationhelper.getDomain_mail());
-                sendhelper.setPassword(Registrationhelper.getPassword());
-                new sendhelper(getApplicationContext()).execute();
+                        sendhelper.setType("Registered");
+                        sendhelper.setDommail(Registrationhelper.getDomain_mail());
+                        sendhelper.setPassword(Registrationhelper.getPassword());
+                        new sendhelper(getApplicationContext()).execute();
 
-                MainActivity.act.finish();
-                Toast.makeText(otpactivity.this, "Successfully Registered", Toast.LENGTH_SHORT)
-                    .show();
-                if (Registrationhelper.getRole().equals("Student")) {
-                  registerstudent();
+                        MainActivity.act.finish();
+                        Toast.makeText(otpactivity.this, "Successfully Registered", Toast.LENGTH_SHORT)
+                                .show();
+                        if (Registrationhelper.getRole().equals("Student")) {
+                            registerstudent();
+                        }
+                        if (Registrationhelper.getRole().equals("Faculty")) {
+                            registerfaculty();
+                        }
+
+                    } else {
+                        errordisplay.setVisibility(View.VISIBLE);
+                    }
                 }
-                if (Registrationhelper.getRole().equals("Faculty")) {
-                  registerfaculty();
-                }
-
-              } else {
-                errordisplay.setVisibility(View.VISIBLE);
-              }
             }
+            else if(type=="forgot")
+            {
+                if(count==0)
+                {
+                    if(otphelper.getOtpvalue()== Integer.parseInt(value))
+                    {
+                        Intent i=new Intent(otpactivity.this, forgotreset.class);
+                        startActivity(i);
+                    }
+                    else
+                    {
+                        errordisplay.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            }
+
           }
         });
   }

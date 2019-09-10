@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.circle.ForgotPassword.forgotreset;
 import com.example.circle.MainActivity;
 import com.example.circle.otpactivity;
 import com.example.circle.otphelper;
@@ -68,6 +69,15 @@ public class sendhelper extends AsyncTask<String,Integer,String> {
                         "saisampaths60@gmail.com",
                         getDommail());
             }
+            else if(getType().toString().equals("forgot"))
+            {
+                i1=2;
+                otphelper.setOtpvalue(getOtp());
+                sender.sendMail("OTP for Password Reset",
+                        "Your OTP for resetting password is: " + getOtp(),
+                        "saisampaths60@gmail.com",
+                        getDommail());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,6 +95,10 @@ public class sendhelper extends AsyncTask<String,Integer,String> {
                     context.startActivity(i);
                     break;
             case 1: Toast.makeText(context,"Login Details sent to Mail",Toast.LENGTH_SHORT).show();
+                    break;
+            case 2: Toast.makeText(context,"OTP Sent Successfully",Toast.LENGTH_SHORT).show();
+                    i=new Intent(context, otpactivity.class);
+                    context.startActivity(i);
                     break;
         }
 

@@ -38,6 +38,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.circle.ForgotPassword.forgothelper;
 import com.example.circle.MailService.sendhelper;
 
 import org.json.JSONArray;
@@ -416,6 +417,15 @@ public class MainActivity extends AppCompatActivity {
           }
         });
 
+    forgotpassword.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        sendhelper.setType("forgot");
+        Intent i1=new Intent(MainActivity.this, forgothelper.class);
+        startActivity(i1);
+      }
+    });
+
     loginbutton.setOnClickListener(
         new View.OnClickListener() {
           @Override
@@ -448,6 +458,8 @@ public class MainActivity extends AppCompatActivity {
             }
           }
         });
+
+
 
     Date dNow = new Date();
     SimpleDateFormat ft = new SimpleDateFormat("yyyy");
