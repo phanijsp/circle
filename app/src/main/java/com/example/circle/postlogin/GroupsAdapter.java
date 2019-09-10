@@ -35,17 +35,11 @@ public class GroupsAdapter extends ArrayAdapter<Groups> {
     if (listItem == null)
       listItem = LayoutInflater.from(mContext).inflate(R.layout.grouplist, parent, false);
     Groups currentGroup = groupslist.get(position);
-
     TextView groupname = (TextView) listItem.findViewById(R.id.groupname);
     TextView groupyear = (TextView) listItem.findViewById(R.id.groupyear);
     groupname.setText(currentGroup.getname());
     groupyear.setText(currentGroup.getYear());
 
-    //  TextView release = (TextView) listItem.findViewById(R.id.value);
-
-    //   name.setTypeface(typeface);
-    // release.setTypeface(typeface);
-    // release.setText(currentMOvie.getvalue());
 
     return listItem;
   }

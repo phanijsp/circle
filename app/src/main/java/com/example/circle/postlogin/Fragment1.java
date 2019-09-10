@@ -2,6 +2,7 @@ package com.example.circle.postlogin;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -177,8 +178,18 @@ public class Fragment1 extends Fragment {
           }
         });
 
+    groups_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+      @Override
+      public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        return true;
+      }
+    });
+
+
     return view;
   }
+
 
   public void pushid(final int id) {
     Log.i("huh", "I am in push id  groupid : " + String.valueOf(id) + " ? ");

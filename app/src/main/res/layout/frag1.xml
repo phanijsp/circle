@@ -27,23 +27,49 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_group_add_black_24dp" />
 
+    <ImageButton
+        android:id="@+id/addgroup2"
+        android:layout_width="56dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_message_white_24dp" />
+
+    <ImageButton
+        android:id="@+id/addgroup3"
+        android:layout_width="56dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/addgroup2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_message_white_24dp" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
         android:fontFamily="@font/comfortaa_bold"
-        android:text="Groups"
-        android:padding="8dp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
         android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="Groups"
+        android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="22dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ListView
         android:id="@+id/groups_list"
@@ -55,10 +81,11 @@
         android:layout_marginRight="8dp"
         android:divider="@drawable/divbg"
         android:dividerHeight="0.1dp"
-
         android:paddingBottom="200dp"
         android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
 </android.support.constraint.ConstraintLayout>
