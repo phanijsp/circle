@@ -71,17 +71,45 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white">
 
-                <TextView
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    <TextView
+                        android:id="@+id/ip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Manor we shall merit by chief wound no or would"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp"
+                        app:fontFamily="@font/comfortaa" />
 
-                    android:text="Manor we shall merit by chief wound no or would"
-                    android:textColor="@android:color/black"
-                    android:textSize="14dp"
-                    app:fontFamily="@font/comfortaa" />
+                    <TextView
+                        android:id="@+id/io"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ip"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="12:00pm"
+                        android:textColor="@color/g"
+                        android:textSize="10dp" />
+
+
+
+
+
+                </RelativeLayout>
+
 
 
             </RelativeLayout>
@@ -158,7 +186,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-
+                    android:id="@+id/ui"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -168,6 +196,19 @@
                     android:textColor="@android:color/black"
                     app:fontFamily="@font/comfortaa"
                     android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ui"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="12:00pm"
+                    android:textColor="@color/g"
+                    android:textSize="10dp" />
 
             </RelativeLayout>
 
@@ -229,7 +270,7 @@
             <ImageView
 
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/po" />
 
@@ -238,16 +279,35 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/ipa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Manor we shall merit by chief wound no or would"
+                    android:textColor="@android:color/black"
+                    android:textSize="14dp"
+                    app:fontFamily="@font/comfortaa" />
+
+                <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/ipa"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="12:00pm"
+                    android:textColor="@color/g"
+                    android:textSize="10dp" />
 
-                    android:text="Manor we shall merit by chief wound no or would"
-                    app:fontFamily="@font/comfortaa"
-                    android:textColor="@android:color/black"
-                    android:textSize="14dp" />
+
 
             </RelativeLayout>
 
@@ -263,7 +323,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -314,7 +374,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-
+                    android:id="@+id/pl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -326,18 +386,22 @@
                     android:fontFamily="c"
                     android:textColor="@android:color/black"
                     android:textSize="14dp" />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pl"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="12:00pm"
+                    android:textColor="@color/g"
+                    android:textSize="10dp"
+                    android:layout_marginBottom="55dp"/>
 
             </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
