@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.StringTokenizer;
 
 /**
  * Created by HeTingwei on 2017/10/24.
@@ -41,15 +42,6 @@ public class Fragment3 extends Fragment {
             le2;
     TextView nametv,rollnumbertv,xrollnumbertv,passoutyeartv,xpassoutyeartv,branchtv,emailtv,phonetv,domainmailtv,admintv;
 
-    public static String rolenumber;
-    public static void setRoleNumber(String rolenumber){
-        Fragment3.rolenumber=rolenumber;
-    }
-
-    public static String getRoleNumber()
-    {
-        return rolenumber;
-    }
 
     @Nullable
     @Override
@@ -131,8 +123,9 @@ public class Fragment3 extends Fragment {
                                 + branch
                                 + "\n";
                 break;
+
             }
-            setRoleNumber(rollnumber);
+
             tv.setText(a);
             //  Toast.makeText(this,a,Toast.LENGTH_LONG).show();
         } catch (Exception e) {

@@ -37,7 +37,6 @@ import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.example.circle.postlogin.Fragment3.getRoleNumber;
 
 
 public class netbg extends AsyncTask<String, String, String> {
@@ -156,9 +155,6 @@ public class netbg extends AsyncTask<String, String, String> {
                                            + time
                                            + "')");
                            Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
-
-                           if(getRoleNumber()!=sender)
-                           {
                                NotificationChannel channel = null;
                                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -182,7 +178,7 @@ public class netbg extends AsyncTask<String, String, String> {
                                mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                                mNotificationManager.notify(l[0], notification);
                                l[0]++;
-                           }
+
                        } catch (Exception e) {
                            StringWriter sw = new StringWriter();
                            PrintWriter pw = new PrintWriter(sw);
