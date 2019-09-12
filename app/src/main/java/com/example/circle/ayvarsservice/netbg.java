@@ -37,6 +37,8 @@ import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.example.circle.postlogin.Fragment3.getRoleNumber;
+
 
 public class netbg extends AsyncTask<String, String, String> {
 
@@ -48,7 +50,9 @@ public class netbg extends AsyncTask<String, String, String> {
     ProgressDialog progressDialog;
     String stop="FALSE";
 
-static final int[] l = {2};
+    static final int[] l = {2};
+
+
 
 
     public netbg(String param1, String param2, Context context, SQLiteHelper sqLiteHelper){
@@ -153,30 +157,32 @@ static final int[] l = {2};
                                            + "')");
                            Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
 
-                           NotificationChannel channel = null;
-                           NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                           if(getRoleNumber()!=sender)
+                           {
+                               NotificationChannel channel = null;
+                               NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-                           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                               channel = new NotificationChannel("my_channel_01",
-                                       "Channel human readable title",
-                                       NotificationManager.IMPORTANCE_DEFAULT);
-                               mNotificationManager.createNotificationChannel(channel);
+                               if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                   channel = new NotificationChannel("my_channel_01",
+                                           "Channel human readable title",
+                                           NotificationManager.IMPORTANCE_DEFAULT);
+                                   mNotificationManager.createNotificationChannel(channel);
+                               }
+
+                               String messagevalue1=decodeStringUrl(messagevalue);
+
+                               Notification notification =
+                                       new NotificationCompat.Builder(context, "notify_001")
+                                               .setSmallIcon(R.drawable.ic_launcher_foreground)
+                                               .setContentTitle(groupname)
+                                               .setContentText(sender + "->" + messagevalue1)
+                                               .setPriority(Notification.PRIORITY_HIGH)
+                                               .setDefaults(NotificationCompat.DEFAULT_SOUND)
+                                               .setChannelId("my_channel_01").build();
+                               mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                               mNotificationManager.notify(l[0], notification);
+                               l[0]++;
                            }
-
-                           String messagevalue1=decodeStringUrl(messagevalue);
-
-                           Notification notification =
-                                   new NotificationCompat.Builder(context, "notify_001")
-                                           .setSmallIcon(R.drawable.ic_launcher_foreground)
-                                           .setContentTitle(groupname)
-                                           .setContentText(sender + "->" + messagevalue1)
-                                           .setPriority(Notification.PRIORITY_HIGH)
-                                           .setDefaults(NotificationCompat.DEFAULT_SOUND)
-                                           .setChannelId("my_channel_01").build();
-                           mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                           mNotificationManager.notify(l[0], notification);
-                           l[0]++;
-
                        } catch (Exception e) {
                            StringWriter sw = new StringWriter();
                            PrintWriter pw = new PrintWriter(sw);

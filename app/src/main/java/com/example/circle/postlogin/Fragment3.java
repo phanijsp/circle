@@ -40,6 +40,17 @@ public class Fragment3 extends Fragment {
             le1,
             le2;
     TextView nametv,rollnumbertv,xrollnumbertv,passoutyeartv,xpassoutyeartv,branchtv,emailtv,phonetv,domainmailtv,admintv;
+
+    public static String rolenumber;
+    public static void setRoleNumber(String rolenumber){
+        Fragment3.rolenumber=rolenumber;
+    }
+
+    public static String getRoleNumber()
+    {
+        return rolenumber;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -121,6 +132,7 @@ public class Fragment3 extends Fragment {
                                 + "\n";
                 break;
             }
+            setRoleNumber(rollnumber);
             tv.setText(a);
             //  Toast.makeText(this,a,Toast.LENGTH_LONG).show();
         } catch (Exception e) {
