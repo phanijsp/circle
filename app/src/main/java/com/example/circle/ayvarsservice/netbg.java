@@ -36,7 +36,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import java.util.StringTokenizer;
 
 
 public class netbg extends AsyncTask<String, String, String> {
@@ -48,6 +48,8 @@ public class netbg extends AsyncTask<String, String, String> {
     Context context;
     ProgressDialog progressDialog;
     String stop="FALSE";
+    public static Cursor cursor;
+    String domainmail1;
 
     static final int[] l = {2};
 
@@ -155,6 +157,17 @@ public class netbg extends AsyncTask<String, String, String> {
                                            + time
                                            + "')");
                            Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
+
+                           cursor = sqLiteHelper.getData("SELECT * FROM users");
+                           while (cursor.moveToNext()) {
+                               domainmail1 = cursor.getString(6);
+                               break;
+                           }
+
+                           StringTokenizer st=new StringTokenizer(domainmail1,"@");
+                           String s=st.nextToken();
+
+                           if(!s.equals(sender)) {
                                NotificationChannel channel = null;
                                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -165,7 +178,7 @@ public class netbg extends AsyncTask<String, String, String> {
                                    mNotificationManager.createNotificationChannel(channel);
                                }
 
-                               String messagevalue1=decodeStringUrl(messagevalue);
+                               String messagevalue1 = decodeStringUrl(messagevalue);
 
                                Notification notification =
                                        new NotificationCompat.Builder(context, "notify_001")
@@ -178,6 +191,7 @@ public class netbg extends AsyncTask<String, String, String> {
                                mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                                mNotificationManager.notify(l[0], notification);
                                l[0]++;
+                           }
 
                        } catch (Exception e) {
                            StringWriter sw = new StringWriter();
