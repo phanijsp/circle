@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -58,7 +59,8 @@ public class xcx extends Service {
         Log.i("HERE", "here I am!");
     }
 
-    public xcx() {}
+    public xcx() {
+    }
 
     @Override
     public void onCreate() {
@@ -102,9 +104,11 @@ public class xcx extends Service {
         sendBroadcast(broadcastIntent);
         stoptimertask();
     }
+
     private Timer timer;
     private TimerTask timerTask;
     long oldTime = 0;
+
     public void startTimer() {
         // set a new Timer
         timer = new Timer();
@@ -113,61 +117,63 @@ public class xcx extends Service {
         timer.schedule(timerTask, 1000, 1000); //
     }
 
-    /** it sets the timer to print the counter every x seconds */
+    /**
+     * it sets the timer to print the counter every x seconds
+     */
     public void initializeTimerTask() {
         final ArrayList<Groups> groupslist2 = new ArrayList<>();
-        String groupname2="";
-        try{
+        String groupname2 = "";
+        try {
             Cursor cursor2 = sqLiteHelper.getData("SELECT * FROM groups");
-            while (cursor2.moveToNext()){
+            while (cursor2.moveToNext()) {
                 groupname2 = cursor2.getString(1);
-                StringTokenizer stringTokenizer2 = new StringTokenizer(groupname2,".");
-                groupslist2.add(new Groups(stringTokenizer2.nextToken(),stringTokenizer2.nextToken()));
+                StringTokenizer stringTokenizer2 = new StringTokenizer(groupname2, ".");
+                groupslist2.add(new Groups(stringTokenizer2.nextToken(), stringTokenizer2.nextToken()));
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
         }
         timerTask = new TimerTask() {
-                    public void run() {
-                        groupslist = new ArrayList<>();
-                        String groupname = "";
-                        try {
-                            cursor = sqLiteHelper.getData("SELECT * FROM groups");
-                            while (cursor.moveToNext()) {
-                                groupname = cursor.getString(1);
-                                StringTokenizer stringTokenizer = new StringTokenizer(groupname, ".");
-                                groupslist.add(
-                                        new Groups(stringTokenizer.nextToken(), stringTokenizer.nextToken()));
-                            }
-                        } catch (Exception e) {
-                            StringWriter stringWriter = new StringWriter();
-                            PrintWriter printWriter = new PrintWriter(stringWriter);
-                            e.printStackTrace(printWriter);
-                            String sStackTrace = stringWriter.toString();
-                            Log.i("data", sStackTrace);
-                        }
-                        String s = AreGroupsEqual(groupslist2,groupslist);
-                        if(s.equals("True")){
-                            Log.i("Are Equal","YES");
-                        }
-                        if(s.equals("False")){
-                            Log.i("Are Equal","NO"+groupslist+groupslist2);
-                        }
+            public void run() {
+                groupslist = new ArrayList<>();
+                String groupname = "";
+                try {
+                    cursor = sqLiteHelper.getData("SELECT * FROM groups");
+                    while (cursor.moveToNext()) {
+                        groupname = cursor.getString(1);
+                        StringTokenizer stringTokenizer = new StringTokenizer(groupname, ".");
+                        groupslist.add(
+                                new Groups(stringTokenizer.nextToken(), stringTokenizer.nextToken()));
                     }
-                };
+                } catch (Exception e) {
+                    StringWriter stringWriter = new StringWriter();
+                    PrintWriter printWriter = new PrintWriter(stringWriter);
+                    e.printStackTrace(printWriter);
+                    String sStackTrace = stringWriter.toString();
+                    Log.i("data", sStackTrace);
+                }
+                String s = AreGroupsEqual(groupslist2, groupslist);
+                if (s.equals("True")) {
+                    Log.i("Are Equal", "YES");
+                }
+                if (s.equals("False")) {
+                    Log.i("Are Equal", "NO" + groupslist + groupslist2);
+                }
+            }
+        };
     }
-public String AreGroupsEqual(ArrayList<Groups> groupslist1,ArrayList<Groups> groupslist2){
-        if(groupslist1.containsAll(groupslist2)&&groupslist2.containsAll(groupslist1)){
+
+    public String AreGroupsEqual(ArrayList<Groups> groupslist1, ArrayList<Groups> groupslist2) {
+        if (groupslist1.containsAll(groupslist2) && groupslist2.containsAll(groupslist1)) {
             return "True";
+        } else {
+            return "False";
         }
-        else{
-            return  "False";
-        }
-}
+    }
 
-public void  InitializeGroupObjects(){
+    public void InitializeGroupObjects() {
 
-}
+    }
 
     private void pushtoserver(final String groupname) {
 
@@ -218,7 +224,7 @@ public void  InitializeGroupObjects(){
                                                                 + "','"
                                                                 + time
                                                                 + "')");
-                                                Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
+                                                Log.i("insertanalysis", groupname + sender + messagetype + " " + i + " " + messagevalue);
 
                                                 //      FLAG="DOWN";
 
@@ -269,7 +275,9 @@ public void  InitializeGroupObjects(){
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
-    /** not needed */
+    /**
+     * not needed
+     */
     public void stoptimertask() {
         // stop the timer, if it's not already null
         if (timer != null) {

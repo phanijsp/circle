@@ -15,24 +15,24 @@
         android:elevation="12dp"
         android:padding="12dp"
         android:paddingBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_rest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:bt_active="true"
-              app:bt_colorActive="@color/colorPrimary"
+            app:bt_colorActive="@color/colorPrimary"
             app:bt_colorInactive="@color/default_inactive"
             app:bt_icon="@drawable/inbox"
             app:bt_padding="12dp"
             app:bt_shape="@drawable/transition_background_drawable_default"
             app:bt_title="Inbox"
 
-            app:bt_titlePadding="8dp"/>
+            app:bt_titlePadding="8dp" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_room"
@@ -44,7 +44,7 @@
             app:bt_padding="12dp"
             app:bt_shape="@drawable/transition_background_drawable_default"
             app:bt_title="Timeline"
-            app:bt_titlePadding="8dp"/>
+            app:bt_titlePadding="8dp" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/c_item_happy"
@@ -57,7 +57,7 @@
             app:bt_padding="12dp"
             app:bt_shape="@drawable/transition_background_drawable_default"
             app:bt_title="Account"
-            app:bt_titlePadding="8dp"/>
+            app:bt_titlePadding="8dp" />
     </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
 
     <android.support.v4.view.ViewPager
@@ -67,6 +67,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

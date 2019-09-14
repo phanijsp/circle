@@ -27,8 +27,8 @@ import java.util.Map;
 
 import static java.lang.Boolean.FALSE;
 
-public class pushtoserver   extends Thread {
-    int messageid=0;
+public class pushtoserver extends Thread {
+    int messageid = 0;
     String groupname;
     String url = "http://93.188.165.250/php_files/ayvarservice/getmessages.php";
     StringRequest mStringRequest;
@@ -39,27 +39,29 @@ public class pushtoserver   extends Thread {
     netbg netc;
 
 
-    pushtoserver(String groupname, SQLiteHelper sqLiteHelper, Context context){
-        this.groupname=groupname;
-        this.sqLiteHelper=sqLiteHelper;
-        this.context=context;
+    pushtoserver(String groupname, SQLiteHelper sqLiteHelper, Context context) {
+        this.groupname = groupname;
+        this.sqLiteHelper = sqLiteHelper;
+        this.context = context;
         mRequestQueue = Volley.newRequestQueue(context);
 //        startop();
     }
-    public void  run(){
+
+    public void run() {
         int messageid2 = 0;
         messageid2 = getmessageid();
-        netc = new netbg(groupname,String.valueOf(messageid2),context,sqLiteHelper);
+        netc = new netbg(groupname, String.valueOf(messageid2), context, sqLiteHelper);
         netc.execute();
     }
-    public void stopthread(){
-        netc.stop="TRUE";
+
+    public void stopthread() {
+        netc.stop = "TRUE";
     }
 
 
-    public void run2(){
+    public void run2() {
         mStringRequest =
-                new  StringRequest(
+                new StringRequest(
                         Request.Method.POST,
                         url,
                         new Response.Listener<String>() {
@@ -97,7 +99,7 @@ public class pushtoserver   extends Thread {
                                                                 + "','"
                                                                 + time
                                                                 + "')");
-                                                Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
+                                                Log.i("insertanalysis", groupname + sender + messagetype + " " + i + " " + messagevalue);
                                                 startop();
 
                                             } catch (Exception e) {
@@ -142,10 +144,10 @@ public class pushtoserver   extends Thread {
     }
 
 
-    public void startop(){
-        Log.i("INSTARTOP",groupname);
+    public void startop() {
+        Log.i("INSTARTOP", groupname);
         mStringRequest =
-                new  StringRequest(
+                new StringRequest(
                         Request.Method.POST,
                         url,
                         new Response.Listener<String>() {
@@ -192,7 +194,7 @@ public class pushtoserver   extends Thread {
                                                                 + time
                                                                 + "')");
 //                                                Log.i("insertanalysis", groupname + sender + messagetype+" "+i+" "+messagevalue);
-                                                        startop();
+                                                startop();
                                                 //      FLAG="DOWN";
                                             } catch (Exception e) {
                                                 //    FLAG="DOWN";
@@ -242,8 +244,8 @@ public class pushtoserver   extends Thread {
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     }
 
-    public int getmessageid(){
-        String groupx="q"+groupname;
+    public int getmessageid() {
+        String groupx = "q" + groupname;
 
         try {
             Cursor cursorx = sqLiteHelper.getData("SELECT * FROM " + groupx);
@@ -269,7 +271,7 @@ public class pushtoserver   extends Thread {
             String sStackTrace = stringWriter.toString();
             Log.i("data", sStackTrace);
         }
-        Log.i("xcx",messageid+groupname);
+        Log.i("xcx", messageid + groupname);
         return messageid;
     }
 
