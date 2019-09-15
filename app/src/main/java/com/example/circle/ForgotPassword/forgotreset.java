@@ -27,7 +27,7 @@ import static com.example.circle.MailService.sendhelper.getDommail;
 
 public class forgotreset extends AppCompatActivity {
 
-    String domainmail_str,new_password_str,confirm_new_password_str,role_str;
+    String domainmail_str, new_password_str, confirm_new_password_str, role_str;
     int count;
     EditText new_password;
     EditText confirm_new_password;
@@ -49,21 +49,21 @@ public class forgotreset extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotreset);
 
-        intent=new Intent(forgotreset.this, sendhelper.class);
+        intent = new Intent(forgotreset.this, sendhelper.class);
 
-        new_password=(EditText) findViewById(R.id.newpassword);
-        confirm_new_password=(EditText) findViewById(R.id.confirmnewpassword);
-        reset=(Button) findViewById(R.id.verifybutton);
+        new_password = (EditText) findViewById(R.id.newpassword);
+        confirm_new_password = (EditText) findViewById(R.id.confirmnewpassword);
+        reset = (Button) findViewById(R.id.verifybutton);
 
-        domainmail_str=getDommail();
-        role_str=getRole();
+        domainmail_str = getDommail();
+        role_str = getRole();
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count=0;
-                new_password_str=new_password.getText().toString();
-                confirm_new_password_str=confirm_new_password.getText().toString();
+                count = 0;
+                new_password_str = new_password.getText().toString();
+                confirm_new_password_str = confirm_new_password.getText().toString();
                 if (new_password_str.equals("")) {
                     count++;
                     new_password.requestFocus();
@@ -82,21 +82,19 @@ public class forgotreset extends AppCompatActivity {
                     confirm_new_password.requestFocus();
                     confirm_new_password.setError("Password not Matched");
                 }
-                if(count==0)
-                {
+                if (count == 0) {
                     /*Toast.makeText(forgotreset.this, "Password Reset Successful", Toast.LENGTH_SHORT).show();
                     Intent i=new Intent(forgotreset.this, MainActivity.class);
                     startActivity(i);*/
-                    changepassword(role_str,domainmail_str,new_password_str);
+                    changepassword(role_str, domainmail_str, new_password_str);
                 }
             }
         });
     }
 
-    public void changepassword(final String role_str,final String domainmail_str,final String new_password_str)
-    {
+    public void changepassword(final String role_str, final String domainmail_str, final String new_password_str) {
         MyRequestQueue = Volley.newRequestQueue(this);
-        String url="http://93.188.165.250/php_files/changepassword.php";
+        String url = "http://93.188.165.250/php_files/changepassword.php";
         StringRequest MyStringRequest =
                 new StringRequest(
                         Request.Method.POST,
@@ -104,36 +102,32 @@ public class forgotreset extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.i("qwe",response);
-                                if(response.equals("success"))
-                                {
+                                Log.i("qwe", response);
+                                if (response.equals("success")) {
                                     Toast.makeText(forgotreset.this, "Password updated", Toast.LENGTH_SHORT).show();
                                     sendhelper.setType("reset");
                                     sendhelper.setDommail(domainmail_str);
                                     sendhelper.setPassword(new_password_str);
                                     new sendhelper(getApplicationContext()).execute();
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(forgotreset.this, "Server Error Occured", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
                         new Response
-                                .ErrorListener(){
+                                .ErrorListener() {
                             @Override
-                            public void onErrorResponse(VolleyError error)
-                            {
+                            public void onErrorResponse(VolleyError error) {
                                 Toast.makeText(forgotreset.this, "Please check the netwrok and try again", Toast.LENGTH_SHORT).show();
                             }
                         }
-                ){
+                ) {
                     protected Map<String, String> getParams() {
                         Map<String, String> MyData = new HashMap<String, String>();
 
-                        MyData.put("tablename",role_str);
+                        MyData.put("tablename", role_str);
                         MyData.put("domainmail", domainmail_str);
-                        MyData.put("newpassword",new_password_str);
+                        MyData.put("newpassword", new_password_str);
                         return MyData;
                     }
                 };

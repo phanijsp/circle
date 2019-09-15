@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/top_navigation_constraint"
-    android:paddingBottom="35dp"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:paddingBottom="35dp">
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="1">
+
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -78,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rellay1"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal" />
 
 
             <RelativeLayout
@@ -126,7 +127,6 @@
                             android:background="@color/grey" />
 
                     </LinearLayout>
-
 
 
                     <LinearLayout
@@ -190,6 +190,7 @@
                             android:background="@color/grey" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -219,6 +220,7 @@
                             android:background="@color/grey" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -248,6 +250,7 @@
                             android:background="@color/grey" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -277,7 +280,6 @@
                             android:background="@color/grey" />
 
                     </LinearLayout>
-
 
 
                 </LinearLayout>

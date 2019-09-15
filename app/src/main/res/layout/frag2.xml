@@ -2,20 +2,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@color/white"
-    >
+    android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@color/white"
-            >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -105,31 +103,10 @@
                         android:textSize="10dp" />
 
 
-
-
-
                 </RelativeLayout>
 
 
-
             </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             <RelativeLayout
@@ -194,8 +171,9 @@
 
                     android:text="Manor we shall merit by chief wound no or would"
                     android:textColor="@android:color/black"
-                    app:fontFamily="@font/comfortaa"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    app:fontFamily="@font/comfortaa" />
+
                 <TextView
                     android:id="@+id/ll"
                     android:layout_width="wrap_content"
@@ -211,17 +189,6 @@
                     android:textSize="10dp" />
 
             </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
 
 
             <RelativeLayout
@@ -308,16 +275,7 @@
                     android:textSize="10dp" />
 
 
-
             </RelativeLayout>
-
-
-
-
-
-
-
-
 
 
             <RelativeLayout
@@ -381,11 +339,12 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
 
-                    android:text="Manor we shall merit by chief wound no or would"
-                    app:fontFamily="@font/comfortaa"
                     android:fontFamily="c"
+                    android:text="Manor we shall merit by chief wound no or would"
                     android:textColor="@android:color/black"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    app:fontFamily="@font/comfortaa" />
+
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -396,10 +355,10 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="0dp"
+                    android:layout_marginBottom="55dp"
                     android:text="12:00pm"
                     android:textColor="@color/g"
-                    android:textSize="10dp"
-                    android:layout_marginBottom="55dp"/>
+                    android:textSize="10dp" />
 
             </RelativeLayout>
         </LinearLayout>

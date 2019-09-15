@@ -10,7 +10,7 @@ import java.io.StringWriter;
 
 public class messageidhelper {
     public static SQLiteHelper sqLiteHelper;
-    public static int messageid=0;
+    public static int messageid = 0;
 
     public static SQLiteHelper getSqLiteHelper() {
         return sqLiteHelper;
@@ -21,7 +21,7 @@ public class messageidhelper {
     }
 
     public static int getMessageid(String groupname) {
-        String groupx="q"+groupname;
+        String groupx = "q" + groupname;
 
         try {
             Cursor cursorx = sqLiteHelper.getData("SELECT * FROM " + groupx);
@@ -47,7 +47,7 @@ public class messageidhelper {
             String sStackTrace = stringWriter.toString();
             Log.i("data", sStackTrace);
         }
-        Log.i("xcx",messageid+groupname);
+        Log.i("xcx", messageid + groupname);
         return messageid;
     }
 

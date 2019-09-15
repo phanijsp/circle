@@ -30,21 +30,23 @@ public class SensorService extends Service {
     public static Cursor cursor;
     public SQLiteHelper sqLiteHelper;
     RequestQueue MyRequestQueue;
+
     public SensorService(Context applicationContext) {
         super();
     }
+
     public SensorService() {
     }
 
     @Override
     public void onCreate() {
-        Log.i("OnCreate","In OnCreate");
+        Log.i("OnCreate", "In OnCreate");
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("OnStart","In OnStart");
+        Log.i("OnStart", "In OnStart");
 
         //cut from onCreate to test
         MyRequestQueue = Volley.newRequestQueue(this);
@@ -74,7 +76,7 @@ public class SensorService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.i("OnDestroy","Destroyed !");
+        Log.i("OnDestroy", "Destroyed !");
         super.onDestroy();
         Intent broadcastIntent =
                 new Intent(getApplicationContext(), SensorRestarterBroadcastReceiver.class);
@@ -114,87 +116,90 @@ public class SensorService extends Service {
                             String sStackTrace = stringWriter.toString();
                         }
                         String equality = AreGroupsFinalEqual(groupslistfinal1[0], groupslistfinal2[0]);
-                        if(equality.equals("YES")){
-                        }
-                        else if(equality.equals("NO")){
+                        if (equality.equals("YES")) {
+                        } else if (equality.equals("NO")) {
                             ArrayList<String> x = new ArrayList<String>(groupslistfinal1[0]);
-                            Log.i("YouFoundIt", x.toString()+"\n"+ groupslistfinal1[0]);
-                            ArrayList<String> y =new ArrayList<String>(groupslistfinal1[0]);
-                            ArrayList<String> z=new ArrayList<String>(groupslistfinal2[0]);
+                            Log.i("YouFoundIt", x.toString() + "\n" + groupslistfinal1[0]);
+                            ArrayList<String> y = new ArrayList<String>(groupslistfinal1[0]);
+                            ArrayList<String> z = new ArrayList<String>(groupslistfinal2[0]);
                             CreateNewThreadObjects(groupslistfinal1[0], groupslistfinal2[0]);
-                            DeleteOldThreadObjects(y,z);
+                            DeleteOldThreadObjects(y, z);
                             groupslistfinal2[0] = x;
 //                            InitializeThreadObjects(groupslistfinal1);
                         }
                     }
                 };
     }
-    public String AreGroupsFinalEqual(ArrayList<String> groupslistfinal1x,ArrayList<String> groupslistfinal2x){
+
+    public String AreGroupsFinalEqual(ArrayList<String> groupslistfinal1x, ArrayList<String> groupslistfinal2x) {
         Collections.sort(groupslistfinal1x);
         Collections.sort(groupslistfinal2x);
-        if(groupslistfinal1x.equals(groupslistfinal2x)){
+        if (groupslistfinal1x.equals(groupslistfinal2x)) {
             return "YES";
-        }
-        else{
-            Log.i("AreGroupsEqualxno",groupslistfinal1x.toString()+"\n"+groupslistfinal2x.toString());
+        } else {
+            Log.i("AreGroupsEqualxno", groupslistfinal1x.toString() + "\n" + groupslistfinal2x.toString());
             return "NO";
         }
     }
-    public void CreateNewThreadObjects(ArrayList<String> groupslistfinaly1,ArrayList<String> groupslistfinaly2){
-        ArrayList<String> groupslistfinalx1=new ArrayList<String>();
+
+    public void CreateNewThreadObjects(ArrayList<String> groupslistfinaly1, ArrayList<String> groupslistfinaly2) {
+        ArrayList<String> groupslistfinalx1 = new ArrayList<String>();
         ArrayList<String> groupslistfinalx2 = new ArrayList<String>();
-        groupslistfinalx1=groupslistfinaly1;
-        groupslistfinalx2=groupslistfinaly2;
+        groupslistfinalx1 = groupslistfinaly1;
+        groupslistfinalx2 = groupslistfinaly2;
         for (int i = 0; i < groupslistfinalx2.size(); i++) {
-            for(int j = 0; j<groupslistfinalx1.size(); j++){
-                if(groupslistfinalx1.get(j).equals(groupslistfinalx2.get(i))){
+            for (int j = 0; j < groupslistfinalx1.size(); j++) {
+                if (groupslistfinalx1.get(j).equals(groupslistfinalx2.get(i))) {
                     groupslistfinalx1.remove(j);
 
                 }
             }
         }
-        if(groupslistfinalx1.size()>0){
-            Log.i("AreGroupsEqualxnoincrtn",groupslistfinalx1.toString());
+        if (groupslistfinalx1.size() > 0) {
+            Log.i("AreGroupsEqualxnoincrtn", groupslistfinalx1.toString());
             InitializeThreadObjects(groupslistfinalx1);
         }
     }
-    public void DeleteOldThreadObjects(ArrayList<String> groupslistfinal1,ArrayList<String> groupslistfinal2){
-        for(int i = 0 ; i< groupslistfinal1.size(); i++){
-            for(int j = 0 ; j< groupslistfinal2.size();j++){
-                if(groupslistfinal2.get(j).equals(groupslistfinal1.get(i))){
+
+    public void DeleteOldThreadObjects(ArrayList<String> groupslistfinal1, ArrayList<String> groupslistfinal2) {
+        for (int i = 0; i < groupslistfinal1.size(); i++) {
+            for (int j = 0; j < groupslistfinal2.size(); j++) {
+                if (groupslistfinal2.get(j).equals(groupslistfinal1.get(i))) {
                     groupslistfinal2.remove(j);
                 }
             }
         }
-        if(groupslistfinal2.size()>0){
-            Log.i("AreGroupsEqualxnoindelo",groupslistfinal2.toString());
+        if (groupslistfinal2.size() > 0) {
+            Log.i("AreGroupsEqualxnoindelo", groupslistfinal2.toString());
             FinalizeThreadObjects(groupslistfinal2);
-        }else{
-            Log.i("AreGroupsEqualxnodelno",groupslistfinal2.toString());
+        } else {
+            Log.i("AreGroupsEqualxnodelno", groupslistfinal2.toString());
 
         }
     }
-    public void InitializeThreadObjects(ArrayList<String> groupslistfinalx){
-                pushtoserver[] pushgroups = new pushtoserver[groupslistfinalx.size()];
-                for(int i = 0 ; i < groupslistfinalx.size() ; i++ ){
-                    StringTokenizer stringTokenizer = new StringTokenizer(groupslistfinalx.get(i), ".");
-                    String groupname = stringTokenizer.nextToken()+stringTokenizer.nextToken();
-                    pushgroups[i] = new pushtoserver(groupname,sqLiteHelper,this);
-                    pushtoservers.add(pushgroups[i]);
-                    pushgroups[i].start();
-                    pushgroups[i].setName(groupname);
-                }
+
+    public void InitializeThreadObjects(ArrayList<String> groupslistfinalx) {
+        pushtoserver[] pushgroups = new pushtoserver[groupslistfinalx.size()];
+        for (int i = 0; i < groupslistfinalx.size(); i++) {
+            StringTokenizer stringTokenizer = new StringTokenizer(groupslistfinalx.get(i), ".");
+            String groupname = stringTokenizer.nextToken() + stringTokenizer.nextToken();
+            pushgroups[i] = new pushtoserver(groupname, sqLiteHelper, this);
+            pushtoservers.add(pushgroups[i]);
+            pushgroups[i].start();
+            pushgroups[i].setName(groupname);
+        }
 
     }
-    public void FinalizeThreadObjects(ArrayList<String> groupslistfinalx){
-                for(int i = 0;i< groupslistfinalx.size();i++){
-                    for(int j = 0; j<pushtoservers.size();j++){
-                        pushtoserver pushtoserver = pushtoservers.get(j);
-                        if(pushtoserver.getName().equals(groupslistfinalx.get(i))){
-                            pushtoserver.stopthread();
-                        }
-                    }
+
+    public void FinalizeThreadObjects(ArrayList<String> groupslistfinalx) {
+        for (int i = 0; i < groupslistfinalx.size(); i++) {
+            for (int j = 0; j < pushtoservers.size(); j++) {
+                pushtoserver pushtoserver = pushtoservers.get(j);
+                if (pushtoserver.getName().equals(groupslistfinalx.get(i))) {
+                    pushtoserver.stopthread();
                 }
+            }
+        }
     }
 
     public void stoptimertask() {
@@ -204,6 +209,7 @@ public class SensorService extends Service {
             timer = null;
         }
     }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
