@@ -16,42 +16,16 @@
         android:background="@color/colorPrimary"/>
 
     <ImageButton
-        android:id="@+id/addgroup"
+        android:id="@+id/Menu"
         android:layout_width="56dp"
         android:layout_height="0dp"
         android:background="@null"
-        android:padding="12dp"
+        android:padding="14dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_group_add_black_24dp"
-        tools:ignore="VectorDrawableCompat" />
-
-    <ImageButton
-        android:id="@+id/addgroup2"
-        android:layout_width="56dp"
-        android:layout_height="0dp"
-        android:background="@null"
-        android:padding="12dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_message_white_24dp"
-        tools:ignore="VectorDrawableCompat" />
-
-    <ImageButton
-        android:id="@+id/addgroup3"
-        android:layout_width="56dp"
-        android:layout_height="0dp"
-        android:background="@null"
-        android:padding="12dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toStartOf="@+id/addgroup2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_message_white_24dp"
+        app:srcCompat="@drawable/ic_more_vert_black_24dp"
         tools:ignore="VectorDrawableCompat" />
 
     <TextView
@@ -72,14 +46,15 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ListView
-        android:id="@+id/groups_list"
+        android:id="@+id/originalgroupslist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:scrollbars="none"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:divider="@drawable/divbg"
@@ -89,6 +64,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <com.example.circle.postlogin.CustomSpinner
+        android:id="@+id/spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:gravity="end"
+        android:pointerIcon="@null"
+        android:background="@null"
+        app:layout_constraintTop_toBottomOf="@id/Menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="16dp" />
 
 
 </android.support.constraint.ConstraintLayout>

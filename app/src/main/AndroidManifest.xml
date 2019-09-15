@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.circle">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ForgotPassword.forgotreset"></activity>
+        <activity android:name=".postlogin.SendMessageToMultipleGroups.Multiple_grps_sender"></activity>
+        <activity android:name=".postlogin.SendMessageToMultipleGroups.ListingAllGroups" />
+        <activity android:name=".ForgotPassword.forgotreset" />
         <activity android:name=".ForgotPassword.forgothelper" />
         <activity
             android:name=".postlogin.chatactivity"
@@ -35,15 +33,19 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service
-            android:name=".ayvarsservice.SensorService"
-            android:enabled="true" />
-
         <receiver
             android:name=".ayvarsservice.SensorRestarterBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
             android:label="RestartServiceWhenStopped" />
+
+        <service
+            android:name=".ayvarsservice.SensorService"
+            android:enabled="true" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
