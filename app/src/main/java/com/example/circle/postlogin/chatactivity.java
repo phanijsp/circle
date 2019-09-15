@@ -315,7 +315,6 @@ public class chatactivity extends AppCompatActivity {
         return st.nextToken();
     }
 
-
     public void pushmessagetoserver(final String pushmessage, final String pushmessagetype, final String sender, final String desgroup, final String time){
             MyRequestQueue  = Volley.newRequestQueue(this);
             String url =

@@ -247,9 +247,14 @@ public class Fragment1 extends Fragment {
                         String s = textView.getText().toString();
                         switch (s) {
                             case "New Message":
-                                Intent k = new Intent(context, ListingAllGroups.class);
-                                startActivity(k);
-                                Toast.makeText(context, "New Msg", Toast.LENGTH_SHORT).show();
+                                if(!getadmin().equals("YES")){
+                                    Toast.makeText(context,"Only admin can perform this action",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Intent k = new Intent(context, ListingAllGroups.class);
+                                    startActivity(k);
+                                    Toast.makeText(context, "New Msg", Toast.LENGTH_SHORT).show();
+                                }
+
                                 break;
                             case "Add Group":
                                 Toast.makeText(context,"Add Grp", Toast.LENGTH_SHORT).show();
