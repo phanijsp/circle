@@ -236,7 +236,6 @@ public class chatactivity extends AppCompatActivity {
                                 String messagevalue = cursor.getString(3);
                                 String time = cursor.getString(4);
                                 messageslist.add(new messages(decodeStringUrl(messagevalue),sender,time,messagetype));
-                                Toast.makeText(chatactivity.this,"Kaboom ! ",Toast.LENGTH_SHORT).show();
                                 messagesadapter.notifyDataSetChanged();
 
                                 messageslitview.setSelection(messageslitview.getCount());
