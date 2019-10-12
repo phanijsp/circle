@@ -1,14 +1,18 @@
 package com.example.circle;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -163,7 +167,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(this, "Haven't logged in yet", Toast.LENGTH_LONG).show();
+            AskExternalPermission();
+//            Toast.makeText(this, "Haven't logged in yet", Toast.LENGTH_LONG).show();
         }
         // leave
         // populate table
@@ -935,5 +940,40 @@ public class MainActivity extends AppCompatActivity {
                         15000,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
+    public void AskExternalPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1000:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this,"Permission Granted !",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this,"Storage Permission is necessary to store Files in Sd card \n App will close now",Toast.LENGTH_LONG).show();
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                finish();
+                                    //add your code here
+                                }
+                            }, 2345);
+
+                        }
+                    });
+                    //                    AskExternalPermission();
+                }
+        }
     }
 }

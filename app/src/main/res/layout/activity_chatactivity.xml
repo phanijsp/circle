@@ -7,135 +7,377 @@
     android:background="@color/blue_grey_bg_light"
     tools:context=".postlogin.chatactivity">
 
-        <View
-            android:id="@+id/view"
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/messageview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginRight="69dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/default_background_oval"
+        android:ems="10"
+        android:fontFamily="@font/comfortaa"
+
+        android:gravity="center_vertical"
+        android:hint="Type Your Message Here"
+        android:inputType="textMultiLine"
+        android:minHeight="50dp"
+        android:padding="12dp"
+        android:paddingStart="18dp"
+        android:paddingLeft="18dp"
+        android:paddingEnd="35dp"
+        android:paddingRight="35dp"
+        android:text=""
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/messages" />
+
+    <ImageButton
+        android:id="@+id/infobutton"
+        android:layout_width="56dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_info_outline_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/backbutton"
+        android:layout_width="56dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="50dp"
+
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/circle"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:scaleType="centerInside"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/messageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/messageview"
+        app:layout_constraintTop_toTopOf="@id/messageview"
+        app:srcCompat="@drawable/ic_send_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/attach"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/messageview"
+        app:layout_constraintEnd_toStartOf="@+id/animation_view2"
+        app:layout_constraintTop_toTopOf="@+id/messageview"
+        app:srcCompat="@drawable/iconfinder_paperclip_1891402" />
+
+    <ImageView
+        android:id="@+id/detach"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/messageview"
+        app:layout_constraintEnd_toStartOf="@+id/animation_view2"
+        app:layout_constraintTop_toTopOf="@+id/messageview"
+        app:srcCompat="@drawable/ic_close_black_24dp"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ListView
+        android:id="@+id/messages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        android:padding="5dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@id/messageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/viewhead"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:fontFamily="@font/comfortaa_bold"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="Chats"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/attachrounded"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/messageview"
+        app:layout_constraintEnd_toEndOf="@+id/messageview"
+        app:layout_constraintStart_toStartOf="@+id/messageview">
+
+        <LinearLayout
+            android:id="@+id/imageselector"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/docselector"
+            app:layout_constraintEnd_toStartOf="@+id/videoselector"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorPrimary"/>
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/infobutton"
-            android:layout_width="56dp"
-            android:layout_height="0dp"
-            android:background="@null"
-            android:padding="12dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_info_outline_black_24dp" />
+            <ImageView
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/iconfinder_image_1055042" />
 
-        <ImageButton
-            android:id="@+id/backbutton"
-            android:layout_width="56dp"
-            android:layout_height="0dp"
-            android:background="@null"
-            android:padding="12dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintStart_toStartOf="@id/view"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="Image" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/videoselector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/audioselector"
+            app:layout_constraintLeft_toRightOf="@id/imageselector"
+            app:layout_constraintStart_toEndOf="@id/imageselector"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/iconfinder_video_1054941" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="Video" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/audioselector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/videoselector"
+            app:layout_constraintStart_toEndOf="@id/videoselector"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/iconfinder_speaker_1054973_mod" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="Audio" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/docselector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/x1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/x1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageselector">
+
+            <ImageView
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/iconfinder_doc_1055091" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="Document" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/x1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@id/x2"
+            app:layout_constraintLeft_toRightOf="@id/docselector"
+            app:layout_constraintRight_toLeftOf="@id/x2"
+            app:layout_constraintStart_toEndOf="@id/docselector"
+            app:layout_constraintTop_toBottomOf="@id/imageselector">
+
+            <ImageView
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/iconfinder_doc_1055091" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="x1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/x2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/x1"
+            app:layout_constraintStart_toEndOf="@id/x1"
+            app:layout_constraintTop_toBottomOf="@id/imageselector">
+
+            <ImageView
+                android:layout_width="69dp"
+                android:layout_height="69dp"
+                android:src="@drawable/iconfinder_doc_1055091" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/comfortaa"
+                android:text="x2" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/messageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/messageview"
+        app:layout_constraintTop_toTopOf="@id/messageview"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="animation.json"
+        app:lottie_loop="false" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/loading_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/attachrounded"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
-            android:id="@+id/viewhead"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-
-            android:fontFamily="@font/comfortaa_bold"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:text="Chats"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="22dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/view"
-            app:layout_constraintTop_toTopOf="@+id/view" />
-
-        <ListView
-            android:id="@+id/messages"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:divider="@null"
-            android:dividerHeight="5dp"
-            android:scrollbars="none"
-            android:padding="5dp"
-            app:layout_constraintBottom_toTopOf="@id/messageview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
-
-        <EditText
-            android:id="@+id/messageview"
-            android:layout_width="0dp"
+            android:id="@+id/loading_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="69dp"
-            android:layout_marginRight="69dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/default_background_oval"
-            android:ems="10"
             android:fontFamily="@font/comfortaa"
-            android:gravity="center_vertical"
-
-            android:hint="Type Your Message Here"
-            android:inputType="textMultiLine"
-            android:minHeight="50dp"
-            android:padding="12dp"
-            android:paddingStart="18dp"
-            android:paddingLeft="18dp"
-            android:paddingEnd="18dp"
-            android:paddingRight="18dp"
-            android:text=""
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="50dp"
-
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/circle"
             android:paddingLeft="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingEnd="5dp"
-            android:visibility="invisible"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="@id/messageview"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:text="uploading"
+            app:layout_constraintBottom_toTopOf="@id/animation_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/messageview"
-            app:layout_constraintTop_toTopOf="@id/messageview"
-            app:srcCompat="@drawable/ic_send_black_24dp" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_view2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerInside"
+            android:id="@+id/animation_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="16dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/messageview"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/messageview"
-            app:layout_constraintTop_toTopOf="@id/messageview"
-            app:lottie_autoPlay="false"
-            app:lottie_fileName="animation.json"
-            app:lottie_loop="false" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loading_info"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="true" />
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

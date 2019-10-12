@@ -91,6 +91,7 @@ public class netbg extends AsyncTask<String, String, String> {
             OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
             writer.write(urlParameters);
+            Log.i("ilakathamafaliya",urlParameters);
             writer.flush();
 
             String result = "";
