@@ -354,7 +354,7 @@
             android:paddingTop="8dp"
             android:paddingRight="8dp"
             android:text="uploading"
-            app:layout_constraintBottom_toTopOf="@id/animation_view"
+            app:layout_constraintBottom_toTopOf="@id/loading_animation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -362,7 +362,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_view"
+            android:id="@+id/loading_animation"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:elevation="16dp"

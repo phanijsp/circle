@@ -67,7 +67,7 @@ public class file_download_async extends AsyncTask<String, String, String> {
                         message_type + "' AND messagevalue = '" +
                         file_url + "' AND sender = '" + sender
                         + "' AND time = '" + time+"'");
-                messageslist.set(msg_id,new messages(Environment.getExternalStorageDirectory().getAbsolutePath()+"/8kwallpapers/"+getFileName(),sender,time,message_type+"_downloaded"));
+                messageslist.set(msg_id,new messages(Environment.getExternalStorageDirectory().getAbsolutePath()+"/8kwallpapers/"+getFileName(),sender,time,message_type+"_downloaded","downloaded"));
                 messageadapter.notifyDataSetChanged();
 
 

@@ -3,6 +3,7 @@ package com.example.circle.postlogin;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.circle.R;
 import com.squareup.picasso.Picasso;
 
@@ -63,6 +65,9 @@ public class messagesAdapter extends ArrayAdapter<messages> {
             TextView time = (TextView) listItem.findViewById(R.id.timeview);
             LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
             LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
+            ImageView download_button = (ImageView) listItem.findViewById(R.id.imageView4);
+            ImageView thumb = (ImageView) listItem.findViewById(R.id.image_layout);
+            LottieAnimationView lottieAnimationView = (LottieAnimationView)listItem.findViewById(R.id.loading_animation);
             if (currentmessage.getSender().equals(messages.getUsername())) {
                 lLayout.setGravity(Gravity.RIGHT);
                 setMargins(linearLayout, 100, 8, 8, 8);
@@ -75,6 +80,16 @@ public class messagesAdapter extends ArrayAdapter<messages> {
                 sender.setVisibility(View.VISIBLE);
                 sender.setText(currentmessage.getSender());
                 linearLayout.setBackgroundResource(R.drawable.chatleftbg);
+            }
+            if(currentmessage.getMessagestatus().equals("downloading")){
+                thumb.setVisibility(View.INVISIBLE);
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                download_button.setVisibility(View.GONE);
+            }
+            if(currentmessage.getMessagestatus().equals("not_downloaded")){
+                lottieAnimationView.setVisibility(View.GONE);
+                download_button.setVisibility(View.VISIBLE);
+                thumb.setVisibility(View.VISIBLE);
             }
             messagevalue.setText(currentmessage.getMessagevalue());
             time.setText(currentmessage.getTime());

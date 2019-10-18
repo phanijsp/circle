@@ -84,6 +84,20 @@
                 app:layout_constraintTop_toTopOf="@+id/image_layout"
                 app:srcCompat="@drawable/ic_file_download_black_24dp"
                 tools:ignore="VectorDrawableCompat" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loading_animation"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:elevation="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/image_layout"
+                app:layout_constraintEnd_toEndOf="@id/image_layout"
+                app:layout_constraintStart_toStartOf="@id/image_layout"
+                app:layout_constraintTop_toTopOf="@id/image_layout"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="loading.json"
+                app:lottie_loop="true" />
         </android.support.constraint.ConstraintLayout>
 
 

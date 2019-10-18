@@ -67,7 +67,7 @@ public class chatactivity extends AppCompatActivity {
     ArrayList<messages> messageslist;
     EditText messageview;
     Cursor cursor;
-    public int messageid=0;
+    public int messageid = 0;
     ImageView attachbutton, detachbutton;
     LinearLayout image_selector, video_selector, audio_selector, document_selector;
     public static ConstraintLayout loading_screen;
@@ -78,15 +78,12 @@ public class chatactivity extends AppCompatActivity {
     public static String selected_file_groupname;
 
 
-
-
     public static void setLoading_screen_visible() {
 
 
         loading_screen.setVisibility(View.VISIBLE);
 
     }
-
 
 
     public static void setLoading_screen_gone() {
@@ -119,7 +116,6 @@ public class chatactivity extends AppCompatActivity {
         slide_in_anim = AnimationUtils.loadAnimation(this, R.anim.slide_in);
         slide_out_anim = AnimationUtils.loadAnimation(this, R.anim.slide_out);
         final View view2 = (View) findViewById(R.id.view2);
-
 
 
         final String domainname = getdomainname();
@@ -302,10 +298,10 @@ public class chatactivity extends AppCompatActivity {
                 String time = dateFormat.format(date);
 
 
-                selected_file_groupname=getIntent().getStringExtra("groupname");
-                selected_file_type="image";
-                selected_file_sender=domainname;
-                selected_file_time=time;
+                selected_file_groupname = getIntent().getStringExtra("groupname");
+                selected_file_type = "image";
+                selected_file_sender = domainname;
+                selected_file_time = time;
                 SelectFile("image/*");
             }
         });
@@ -317,10 +313,10 @@ public class chatactivity extends AppCompatActivity {
                 Date date = new Date();
                 String time = dateFormat.format(date);
 
-                selected_file_time=time;
-                selected_file_sender=domainname;
-                selected_file_groupname=getIntent().getStringExtra("groupname");
-                selected_file_type="video";
+                selected_file_time = time;
+                selected_file_sender = domainname;
+                selected_file_groupname = getIntent().getStringExtra("groupname");
+                selected_file_type = "video";
                 SelectFile("video/*");
             }
         });
@@ -332,10 +328,10 @@ public class chatactivity extends AppCompatActivity {
                 Date date = new Date();
                 String time = dateFormat.format(date);
 
-                selected_file_groupname=getIntent().getStringExtra("groupname");
-                selected_file_sender=domainname;
-                selected_file_time=time;
-                selected_file_type="audio";
+                selected_file_groupname = getIntent().getStringExtra("groupname");
+                selected_file_sender = domainname;
+                selected_file_time = time;
+                selected_file_type = "audio";
                 SelectFile("audio/*");
             }
         });
@@ -347,10 +343,10 @@ public class chatactivity extends AppCompatActivity {
                 Date date = new Date();
                 String time = dateFormat.format(date);
 
-                selected_file_groupname=getIntent().getStringExtra("groupname");
-                selected_file_time=time;
-                selected_file_sender=domainname;
-                selected_file_type="document";
+                selected_file_groupname = getIntent().getStringExtra("groupname");
+                selected_file_time = time;
+                selected_file_sender = domainname;
+                selected_file_type = "document";
                 SelectFile("*/*");
 
             }
@@ -382,7 +378,7 @@ public class chatactivity extends AppCompatActivity {
                                 String messagetype = cursor.getString(2);
                                 String messagevalue = cursor.getString(3);
                                 String time = cursor.getString(4);
-                                messageslist.add(new messages(decodeStringUrl(messagevalue), sender, time, messagetype));
+                                messageslist.add(new messages(decodeStringUrl(messagevalue), sender, time, messagetype, "not_downloaded"));
                                 messagesadapter.notifyDataSetChanged();
 
                                 messageslistview.setSelection(messageslistview.getCount());
@@ -419,31 +415,33 @@ public class chatactivity extends AppCompatActivity {
         messageslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                messages currentmessage = (messages)messagesadapter.getItem(i);
-                if(currentmessage.getMessagetype().equals("image")){
-                    Toast.makeText(getApplicationContext(),currentmessage.getMessagetype()+currentmessage.messagevalue,Toast.LENGTH_SHORT).show();
+                messages currentmessage = (messages) messagesadapter.getItem(i);
+                if (currentmessage.getMessagetype().equals("image")) {
+                    messageslist.set(i, new messages(currentmessage.getMessagevalue(), currentmessage.getSender(), currentmessage.getTime(), currentmessage.getMessagetype(), "downloading"));
+                    messagesadapter.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), currentmessage.getMessagetype() + currentmessage.messagevalue, Toast.LENGTH_SHORT).show();
                     file_download_async fileDownloadAsync = new file_download_async(currentmessage.getMessagevalue(),
                             currentmessage.getMessagetype(),
-                            currentmessage.getSender(),currentmessage.getTime(),
+                            currentmessage.getSender(), currentmessage.getTime(),
                             getApplicationContext(),
                             getIntent().getStringExtra("groupname"),
                             i,
                             messageslist,
                             messagesadapter);
                     fileDownloadAsync.execute();
-                }else if(currentmessage.getMessagetype().equals("image_downloaded")){
-                    Toast.makeText(getApplicationContext(),"Already_Downloaded",Toast.LENGTH_SHORT).show();
-                }else if(currentmessage.getMessagetype().equals("video")){
+                } else if (currentmessage.getMessagetype().equals("image_downloaded")) {
+                    Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
+                } else if (currentmessage.getMessagetype().equals("video")) {
 
-                }else if(currentmessage.getMessagetype().equals("video_downloaded")){
+                } else if (currentmessage.getMessagetype().equals("video_downloaded")) {
 
-                }else if(currentmessage.getMessagetype().equals("audio")){
+                } else if (currentmessage.getMessagetype().equals("audio")) {
 
-                }else if(currentmessage.getMessagetype().equals("audio_downloaded")){
+                } else if (currentmessage.getMessagetype().equals("audio_downloaded")) {
 
-                }else if(currentmessage.getMessagetype().equals("document")){
+                } else if (currentmessage.getMessagetype().equals("document")) {
 
-                }else if(currentmessage.getMessagetype().equals("document_downloaded")){
+                } else if (currentmessage.getMessagetype().equals("document_downloaded")) {
 
                 }
 
