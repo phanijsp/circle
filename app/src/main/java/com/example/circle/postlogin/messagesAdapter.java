@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.circle.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -100,7 +101,8 @@ public class messagesAdapter extends ArrayAdapter<messages> {
                 sender.setText(currentmessage.getSender());
                 linearLayout.setBackgroundResource(R.drawable.chatleftbg);
             }
-            imageView.setImageBitmap(BitmapFactory.decodeFile(currentmessage.messagevalue));
+//            imageView.setImageBitmap(BitmapFactory.decodeFile(currentmessage.messagevalue));
+            Picasso.get().load(new File(currentmessage.getMessagevalue())).into(imageView);
             time.setText(currentmessage.getTime());
             return listItem;
         }
