@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -62,11 +63,11 @@ public class chatactivity extends AppCompatActivity {
     Animation slide_in_anim, slide_out_anim;
     TextView viewhead;
     SQLiteHelper sqLiteHelper;
-    ListView messageslitview;
+    ListView messageslistview;
     ArrayList<messages> messageslist;
     EditText messageview;
     Cursor cursor;
-    public int messageid;
+    public int messageid=0;
     ImageView attachbutton, detachbutton;
     LinearLayout image_selector, video_selector, audio_selector, document_selector;
     public static ConstraintLayout loading_screen;
@@ -77,12 +78,16 @@ public class chatactivity extends AppCompatActivity {
     public static String selected_file_groupname;
 
 
+
+
     public static void setLoading_screen_visible() {
 
 
         loading_screen.setVisibility(View.VISIBLE);
 
     }
+
+
 
     public static void setLoading_screen_gone() {
         loading_screen.setVisibility(View.GONE);
@@ -97,7 +102,7 @@ public class chatactivity extends AppCompatActivity {
         imagebackButton = (ImageButton) findViewById(R.id.backbutton);
         imageinfoButton = (ImageButton) findViewById(R.id.infobutton);
         viewhead = (TextView) findViewById(R.id.viewhead);
-        messageslitview = (ListView) findViewById(R.id.messages);
+        messageslistview = (ListView) findViewById(R.id.messages);
         messageslist = new ArrayList<messages>();
         messageview = (EditText) findViewById(R.id.messageview);
         attachbutton = (ImageView) findViewById(R.id.attach);
@@ -108,18 +113,21 @@ public class chatactivity extends AppCompatActivity {
         document_selector = (LinearLayout) findViewById(R.id.docselector);
         loading_screen = (ConstraintLayout) findViewById(R.id.loading_screen);
         messagesadapter = new messagesAdapter(this, messageslist);
+
         sqLiteHelper = new SQLiteHelper(this, "user.sqlite", null, 1);
         lottieAnimationView = (LottieAnimationView) findViewById(R.id.animation_view2);
         slide_in_anim = AnimationUtils.loadAnimation(this, R.anim.slide_in);
         slide_out_anim = AnimationUtils.loadAnimation(this, R.anim.slide_out);
         final View view2 = (View) findViewById(R.id.view2);
 
+
+
         final String domainname = getdomainname();
         messages.setUsername(getdomainname());
         messageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                messageslitview.setSelection(messageslitview.getCount());
+                messageslistview.setSelection(messageslistview.getCount());
                 runOnUiThread(new Runnable() {
 
                     @Override
@@ -128,7 +136,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -144,7 +152,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -161,7 +169,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -177,7 +185,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -193,7 +201,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -207,7 +215,7 @@ public class chatactivity extends AppCompatActivity {
         messageview.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                messageslitview.setSelection(messageslitview.getCount());
+                messageslistview.setSelection(messageslistview.getCount());
                 runOnUiThread(new Runnable() {
 
                     @Override
@@ -216,7 +224,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -232,7 +240,7 @@ public class chatactivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                                 //add your code here
                             }
@@ -350,13 +358,13 @@ public class chatactivity extends AppCompatActivity {
 
         String groupname = getIntent().getStringExtra("groupname");
         viewhead.setText(groupname);
-        messageslitview.setAdapter(messagesadapter);
+        messageslistview.setAdapter(messagesadapter);
         messagesadapter.notifyDataSetChanged();
 
-        messageslitview.setStackFromBottom(true);
+        messageslistview.setStackFromBottom(true);
 
-        //  messageslitview.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
-        messageid = 0;
+        //  messageslistview.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+
         final Handler handler = new Handler();
         // Define the code block to be executed
         final Runnable runnableCode =
@@ -367,7 +375,7 @@ public class chatactivity extends AppCompatActivity {
                             int xid = messageid;
 
                             cursor = sqLiteHelper.getData("SELECT * FROM q" + getIntent().getStringExtra("groupname") + " WHERE messageid > " + String.valueOf(xid));
-                            Log.i("ggg", getIntent().getStringExtra("groupname") + String.valueOf(xid));
+//                            Log.i("ggg", getIntent().getStringExtra("groupname") + String.valueOf(xid));
                             while (cursor.moveToNext()) {
                                 int messageid = cursor.getInt(0);
                                 String sender = cursor.getString(1);
@@ -377,7 +385,7 @@ public class chatactivity extends AppCompatActivity {
                                 messageslist.add(new messages(decodeStringUrl(messagevalue), sender, time, messagetype));
                                 messagesadapter.notifyDataSetChanged();
 
-                                messageslitview.setSelection(messageslitview.getCount());
+                                messageslistview.setSelection(messageslistview.getCount());
 
                             }
 
@@ -391,9 +399,9 @@ public class chatactivity extends AppCompatActivity {
                                 Log.i("if reached", String.valueOf(messageidhelper.getMessageid()));
 
                             } catch (Exception e) {
-                                Log.i("THis is it", "Main error here");
+//                                Log.i("THis is it", "Main error here");
                                 messageidhelper.setMessageid(messageidhelper.getMessageid());
-                                Log.i("MEssage id", String.valueOf(messageidhelper.getMessageid()));
+//                                Log.i("MEssage id", String.valueOf(messageidhelper.getMessageid()));
                             }
                         } catch (Exception e) {
                             Toast.makeText(chatactivity.this, "Boom ! ", Toast.LENGTH_SHORT).show();
@@ -401,13 +409,47 @@ public class chatactivity extends AppCompatActivity {
                             PrintWriter printWriter = new PrintWriter(stringWriter);
                             e.printStackTrace(printWriter);
                             String sStackTrace = stringWriter.toString();
-                            Log.i("sqlite boom : ", sStackTrace);
+//                            Log.i("sqlite boom : ", sStackTrace);
                         }
                         cursor.close();
                         handler.postDelayed(this, 5);
                     }
                 };
         handler.post(runnableCode);
+        messageslistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                messages currentmessage = (messages)messagesadapter.getItem(i);
+                if(currentmessage.getMessagetype().equals("image")){
+                    Toast.makeText(getApplicationContext(),currentmessage.getMessagetype()+currentmessage.messagevalue,Toast.LENGTH_SHORT).show();
+                    file_download_async fileDownloadAsync = new file_download_async(currentmessage.getMessagevalue(),
+                            currentmessage.getMessagetype(),
+                            currentmessage.getSender(),currentmessage.getTime(),
+                            getApplicationContext(),
+                            getIntent().getStringExtra("groupname"),
+                            i,
+                            messageslist,
+                            messagesadapter);
+                    fileDownloadAsync.execute();
+                }else if(currentmessage.getMessagetype().equals("image_downloaded")){
+                    Toast.makeText(getApplicationContext(),"Already_Downloaded",Toast.LENGTH_SHORT).show();
+                }else if(currentmessage.getMessagetype().equals("video")){
+
+                }else if(currentmessage.getMessagetype().equals("video_downloaded")){
+
+                }else if(currentmessage.getMessagetype().equals("audio")){
+
+                }else if(currentmessage.getMessagetype().equals("audio_downloaded")){
+
+                }else if(currentmessage.getMessagetype().equals("document")){
+
+                }else if(currentmessage.getMessagetype().equals("document_downloaded")){
+
+                }
+
+            }
+        });
+
         imageinfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
