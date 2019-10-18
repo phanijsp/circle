@@ -41,7 +41,7 @@ import java.util.TimerTask;
 
 import static java.lang.Boolean.FALSE;
 
-public class xcx extends Service {
+public class  xcx extends Service {
     public int counter = 0;
     public static Cursor cursor;
     public ArrayList<Groups> groupslist;
