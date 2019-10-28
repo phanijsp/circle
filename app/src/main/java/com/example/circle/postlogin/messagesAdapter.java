@@ -2,12 +2,12 @@ package com.example.circle.postlogin;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.circle.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +29,8 @@ public class messagesAdapter extends ArrayAdapter<messages> {
 
     private Context mContext;
     private List<messages> messageslist = new ArrayList<>();
+    VideoRequestHandler videoRequestHandler;
+    Picasso picassoInstance;
     public static final int TYPE_TEXT = 0;
     public static final int TYPE_IMAGE = 1;
     public static final int TYPE_VIDEO = 2;
@@ -47,6 +45,10 @@ public class messagesAdapter extends ArrayAdapter<messages> {
         super(context, 0, list);
         mContext = context;
         messageslist = list;
+        videoRequestHandler = new VideoRequestHandler();
+        picassoInstance = new Picasso.Builder(context.getApplicationContext())
+                .addRequestHandler(videoRequestHandler)
+                .build();
     }
 
     @NonNull
@@ -66,7 +68,7 @@ public class messagesAdapter extends ArrayAdapter<messages> {
             LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
             LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
             ImageView download_button = (ImageView) listItem.findViewById(R.id.imageView4);
-            ImageView thumb = (ImageView) listItem.findViewById(R.id.image_layout);
+            ImageView thumb = (ImageView) listItem.findViewById(R.id.video_thumbnail_layout);
             LottieAnimationView lottieAnimationView = (LottieAnimationView)listItem.findViewById(R.id.loading_animation);
             if (currentmessage.getSender().equals(messages.getUsername())) {
                 lLayout.setGravity(Gravity.RIGHT);
@@ -98,7 +100,7 @@ public class messagesAdapter extends ArrayAdapter<messages> {
             if (listItem == null){
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.view_type_image_downloaded, parent, false);
             }
-            ImageView imageView = (ImageView) listItem.findViewById(R.id.image_layout);
+            ImageView imageView = (ImageView) listItem.findViewById(R.id.video_thumbnail_layout);
             TextView sender = (TextView) listItem.findViewById(R.id.sender);
             TextView time = (TextView) listItem.findViewById(R.id.timeview);
             LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
@@ -131,6 +133,9 @@ public class messagesAdapter extends ArrayAdapter<messages> {
             TextView time = (TextView) listItem.findViewById(R.id.timeview);
             LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
             LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
+            ImageView download_button = (ImageView) listItem.findViewById(R.id.imageView4);
+            ImageView thumb = (ImageView) listItem.findViewById(R.id.video_thumbnail_layout);
+            LottieAnimationView lottieAnimationView = (LottieAnimationView)listItem.findViewById(R.id.loading_animation);
             if (currentmessage.getSender().equals(messages.getUsername())) {
                 lLayout.setGravity(Gravity.RIGHT);
                 setMargins(linearLayout, 100, 8, 8, 8);
@@ -144,7 +149,48 @@ public class messagesAdapter extends ArrayAdapter<messages> {
                 sender.setText(currentmessage.getSender());
                 linearLayout.setBackgroundResource(R.drawable.chatleftbg);
             }
+            if(currentmessage.getMessagestatus().equals("downloading")){
+                thumb.setVisibility(View.INVISIBLE);
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                download_button.setVisibility(View.GONE);
+            }
+            if(currentmessage.getMessagestatus().equals("not_downloaded")){
+                lottieAnimationView.setVisibility(View.GONE);
+                download_button.setVisibility(View.VISIBLE);
+                thumb.setVisibility(View.VISIBLE);
+            }
             messagevalue.setText(currentmessage.getMessagevalue());
+            time.setText(currentmessage.getTime());
+            return listItem;
+        }else if(getItemViewType(position)==TYPE_VIDEO_DOWNLOADED){
+            if (listItem == null){
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.view_type_video_downloaded, parent, false);
+            }
+            ImageView imageView = (ImageView) listItem.findViewById(R.id.video_thumbnail_layout);
+            TextView sender = (TextView) listItem.findViewById(R.id.sender);
+            TextView time = (TextView) listItem.findViewById(R.id.timeview);
+            LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
+            LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
+            if (currentmessage.getSender().equals(messages.getUsername())) {
+                lLayout.setGravity(Gravity.RIGHT);
+                setMargins(linearLayout, 100, 8, 8, 8);
+                linearLayout.setBackgroundResource(R.drawable.chatrightbg);
+                sender.setVisibility(View.GONE);
+            }
+            if (!currentmessage.getSender().equals(messages.getUsername())) {
+                lLayout.setGravity(Gravity.LEFT);
+                setMargins(linearLayout, 8, 8, 100, 8);
+                sender.setVisibility(View.VISIBLE);
+                sender.setText(currentmessage.getSender());
+                linearLayout.setBackgroundResource(R.drawable.chatleftbg);
+            }
+//            imageView.setImageBitmap(BitmapFactory.decodeFile(currentmessage.messagevalue));
+//            Picasso.get().load(new File(currentmessage.getMessagevalue())).into(imageView);
+
+            picassoInstance.load(VideoRequestHandler.SCHEME_VIDEO+":"+currentmessage.getMessagevalue()).into(imageView);
+
+//            Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(currentmessage.getMessagevalue(), MediaStore.Video.Thumbnails.MICRO_KIND);
+//            imageView.setImageBitmap(bitmap);
             time.setText(currentmessage.getTime());
             return listItem;
         }

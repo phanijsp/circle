@@ -77,12 +77,11 @@
                 android:id="@+id/imageView4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginRight="25dp"
                 app:layout_constraintBottom_toBottomOf="@+id/video_thumbnail_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/video_thumbnail_layout"
                 app:layout_constraintTop_toTopOf="@+id/video_thumbnail_layout"
-                app:srcCompat="@drawable/ic_file_download_black_24dp"
+                app:srcCompat="@drawable/ic_play_arrow_black_24dp"
                 tools:ignore="VectorDrawableCompat" />
 
             <com.airbnb.lottie.LottieAnimationView
