@@ -198,7 +198,10 @@ public class messagesAdapter extends ArrayAdapter<messages> {
             if (listItem == null){
                 listItem = LayoutInflater.from(mContext).inflate(R.layout.view_type_audio, parent, false);
             }
-
+            ImageView thumb = (ImageView) listItem.findViewById(R.id.video_thumbnail_layout);
+            ImageView download_button = (ImageView) listItem.findViewById(R.id.imageView4);
+            LottieAnimationView lottieAnimationView = (LottieAnimationView)listItem.findViewById(R.id.loading_animation);
+            TextView value = (TextView)listItem.findViewById(R.id.value);
             TextView messagevalue = (TextView) listItem.findViewById(R.id.messagevalue);
             TextView sender = (TextView) listItem.findViewById(R.id.sender);
             TextView time = (TextView) listItem.findViewById(R.id.timeview);
@@ -217,7 +220,46 @@ public class messagesAdapter extends ArrayAdapter<messages> {
                 sender.setText(currentmessage.getSender());
                 linearLayout.setBackgroundResource(R.drawable.chatleftbg);
             }
-            messagevalue.setText(currentmessage.getMessagevalue());
+            if(currentmessage.getMessagestatus().equals("downloading")){
+                thumb.setVisibility(View.INVISIBLE);
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                download_button.setVisibility(View.GONE);
+            }
+            if(currentmessage.getMessagestatus().equals("not_downloaded")){
+                lottieAnimationView.setVisibility(View.GONE);
+                download_button.setVisibility(View.VISIBLE);
+                thumb.setVisibility(View.VISIBLE);
+            }
+            messagevalue.setText(getFileName(currentmessage.getMessagevalue()));
+            value.setText(getFileName(currentmessage.getMessagevalue()));
+            time.setText(currentmessage.getTime());
+            return listItem;
+        }
+        else if(getItemViewType(position)==TYPE_AUDIO_DOWNLOADED){
+            if (listItem == null){
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.view_type_audio_downloaded, parent, false);
+            }
+            TextView value = (TextView)listItem.findViewById(R.id.value);
+            TextView messagevalue = (TextView) listItem.findViewById(R.id.messagevalue);
+            TextView sender = (TextView) listItem.findViewById(R.id.sender);
+            TextView time = (TextView) listItem.findViewById(R.id.timeview);
+            LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
+            LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
+            if (currentmessage.getSender().equals(messages.getUsername())) {
+                lLayout.setGravity(Gravity.RIGHT);
+                setMargins(linearLayout, 100, 8, 8, 8);
+                linearLayout.setBackgroundResource(R.drawable.chatrightbg);
+                sender.setVisibility(View.GONE);
+            }
+            if (!currentmessage.getSender().equals(messages.getUsername())) {
+                lLayout.setGravity(Gravity.LEFT);
+                setMargins(linearLayout, 8, 8, 100, 8);
+                sender.setVisibility(View.VISIBLE);
+                sender.setText(currentmessage.getSender());
+                linearLayout.setBackgroundResource(R.drawable.chatleftbg);
+            }
+            messagevalue.setText(getFileName(currentmessage.getMessagevalue()));
+            value.setText(getFileName(currentmessage.getMessagevalue()));
             time.setText(currentmessage.getTime());
             return listItem;
         }
@@ -313,6 +355,19 @@ public class messagesAdapter extends ArrayAdapter<messages> {
         else{
             return TYPE_TEXT;
         }
+    }
+
+    public String getFileName(String url){
+        char r[] = url.toCharArray();
+        String filename="";
+        for(int i = 0 ; i < r.length ; i ++){
+            if(r[i]=='/'){
+                filename = "";
+            }else{
+                filename = filename+r[i];
+            }
+        }
+        return filename;
     }
 }
 

@@ -447,9 +447,21 @@ public class chatactivity extends AppCompatActivity {
                 } else if (currentmessage.getMessagetype().equals("video_downloaded")) {
                     Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
                 } else if (currentmessage.getMessagetype().equals("audio")) {
+                    messageslist.set(i, new messages(currentmessage.getMessagevalue(), currentmessage.getSender(), currentmessage.getTime(), currentmessage.getMessagetype(), "downloading"));
+                    messagesadapter.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), currentmessage.getMessagetype() + currentmessage.messagevalue, Toast.LENGTH_SHORT).show();
+                    file_download_async fileDownloadAsync = new file_download_async(currentmessage.getMessagevalue(),
+                            currentmessage.getMessagetype(),
+                            currentmessage.getSender(), currentmessage.getTime(),
+                            getApplicationContext(),
+                            getIntent().getStringExtra("groupname"),
+                            i,
+                            messageslist,
+                            messagesadapter);
+                    fileDownloadAsync.execute();
 
                 } else if (currentmessage.getMessagetype().equals("audio_downloaded")) {
-
+                    Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
                 } else if (currentmessage.getMessagetype().equals("document")) {
 
                 } else if (currentmessage.getMessagetype().equals("document_downloaded")) {
