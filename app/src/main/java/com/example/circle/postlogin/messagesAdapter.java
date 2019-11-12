@@ -270,6 +270,49 @@ public class messagesAdapter extends ArrayAdapter<messages> {
 
             TextView messagevalue = (TextView) listItem.findViewById(R.id.messagevalue);
             TextView sender = (TextView) listItem.findViewById(R.id.sender);
+            TextView value = (TextView)listItem.findViewById(R.id.value);
+            TextView time = (TextView) listItem.findViewById(R.id.timeview);
+            LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
+            LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
+            ImageView thumb = (ImageView) listItem.findViewById(R.id.video_thumbnail_layout);
+            LottieAnimationView lottieAnimationView = (LottieAnimationView)listItem.findViewById(R.id.loading_animation);
+
+            ImageView download_button = (ImageView) listItem.findViewById(R.id.imageView4);
+
+            if (currentmessage.getSender().equals(messages.getUsername())) {
+                lLayout.setGravity(Gravity.RIGHT);
+                setMargins(linearLayout, 100, 8, 8, 8);
+                linearLayout.setBackgroundResource(R.drawable.chatrightbg);
+                sender.setVisibility(View.GONE);
+            }
+            if (!currentmessage.getSender().equals(messages.getUsername())) {
+                lLayout.setGravity(Gravity.LEFT);
+                setMargins(linearLayout, 8, 8, 100, 8);
+                sender.setVisibility(View.VISIBLE);
+                sender.setText(currentmessage.getSender());
+                linearLayout.setBackgroundResource(R.drawable.chatleftbg);
+            } if(currentmessage.getMessagestatus().equals("downloading")){
+                thumb.setVisibility(View.INVISIBLE);
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                download_button.setVisibility(View.GONE);
+            }
+            if(currentmessage.getMessagestatus().equals("not_downloaded")){
+                lottieAnimationView.setVisibility(View.GONE);
+                download_button.setVisibility(View.VISIBLE);
+                thumb.setVisibility(View.VISIBLE);
+            }
+            messagevalue.setText(currentmessage.getMessagevalue());
+            value.setText(getFileName(currentmessage.getMessagevalue()));
+            time.setText(currentmessage.getTime());
+            return listItem;
+        }
+        else if(getItemViewType(position)==TYPE_DOCUMENT_DOWNLOADED){
+            if (listItem == null){
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.view_type_document_downloaded, parent, false);
+            }
+            TextView value = (TextView)listItem.findViewById(R.id.value);
+            TextView messagevalue = (TextView) listItem.findViewById(R.id.messagevalue);
+            TextView sender = (TextView) listItem.findViewById(R.id.sender);
             TextView time = (TextView) listItem.findViewById(R.id.timeview);
             LinearLayout linearLayout = (LinearLayout) listItem.findViewById(R.id.ll);
             LinearLayout lLayout = (LinearLayout) listItem.findViewById(R.id.rootview);
@@ -286,7 +329,8 @@ public class messagesAdapter extends ArrayAdapter<messages> {
                 sender.setText(currentmessage.getSender());
                 linearLayout.setBackgroundResource(R.drawable.chatleftbg);
             }
-            messagevalue.setText(currentmessage.getMessagevalue());
+            messagevalue.setText(getFileName(currentmessage.getMessagevalue()));
+            value.setText(getFileName(currentmessage.getMessagevalue()));
             time.setText(currentmessage.getTime());
             return listItem;
         }

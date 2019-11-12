@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.OpenableColumns;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -42,9 +44,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DateFormat;
@@ -54,6 +58,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.net.URI;
+
 
 public class chatactivity extends AppCompatActivity {
     RequestQueue MyRequestQueue;
@@ -96,6 +102,14 @@ public class chatactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatactivity);
+        if(Build.VERSION.SDK_INT>=24){
+            try{
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
         imagebackButton = (ImageButton) findViewById(R.id.backbutton);
         imageinfoButton = (ImageButton) findViewById(R.id.infobutton);
         viewhead = (TextView) findViewById(R.id.viewhead);
@@ -430,6 +444,8 @@ public class chatactivity extends AppCompatActivity {
                             messagesadapter);
                     fileDownloadAsync.execute();
                 } else if (currentmessage.getMessagetype().equals("image_downloaded")) {
+
+                    openFile(currentmessage.getMessagevalue());
                     Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
                 } else if (currentmessage.getMessagetype().equals("video")) {
                     messageslist.set(i, new messages(currentmessage.getMessagevalue(), currentmessage.getSender(), currentmessage.getTime(), currentmessage.getMessagetype(), "downloading"));
@@ -445,6 +461,7 @@ public class chatactivity extends AppCompatActivity {
                             messagesadapter);
                     fileDownloadAsync.execute();
                 } else if (currentmessage.getMessagetype().equals("video_downloaded")) {
+                    openFile(currentmessage.getMessagevalue());
                     Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
                 } else if (currentmessage.getMessagetype().equals("audio")) {
                     messageslist.set(i, new messages(currentmessage.getMessagevalue(), currentmessage.getSender(), currentmessage.getTime(), currentmessage.getMessagetype(), "downloading"));
@@ -461,11 +478,25 @@ public class chatactivity extends AppCompatActivity {
                     fileDownloadAsync.execute();
 
                 } else if (currentmessage.getMessagetype().equals("audio_downloaded")) {
+                    openFile(currentmessage.getMessagevalue());
                     Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
                 } else if (currentmessage.getMessagetype().equals("document")) {
+                    messageslist.set(i, new messages(currentmessage.getMessagevalue(), currentmessage.getSender(), currentmessage.getTime(), currentmessage.getMessagetype(), "downloading"));
+                    messagesadapter.notifyDataSetChanged();
+                    Toast.makeText(getApplicationContext(), currentmessage.getMessagetype() + currentmessage.messagevalue, Toast.LENGTH_SHORT).show();
+                    file_download_async fileDownloadAsync = new file_download_async(currentmessage.getMessagevalue(),
+                            currentmessage.getMessagetype(),
+                            currentmessage.getSender(), currentmessage.getTime(),
+                            getApplicationContext(),
+                            getIntent().getStringExtra("groupname"),
+                            i,
+                            messageslist,
+                            messagesadapter);
+                    fileDownloadAsync.execute();
 
                 } else if (currentmessage.getMessagetype().equals("document_downloaded")) {
-
+                    openFile(currentmessage.getMessagevalue());
+                    Toast.makeText(getApplicationContext(), "Already_Downloaded", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -639,5 +670,59 @@ public class chatactivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
     }
+
+    public  void openFile(String url){
+        File file = new File(url);
+        Uri uri = Uri.fromFile(file);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        // Check what kind of file you are trying to open, by comparing the url with extensions.
+        // When the if condition is matched, plugin sets the correct intent (mime) type,
+        // so Android knew what application to use to open the file
+        if (url.toString().contains(".doc") || url.toString().contains(".docx")) {
+            // Word document
+            intent.setDataAndType(uri, "application/msword");
+        } else if(url.toString().contains(".pdf")) {
+            // PDF file
+            intent.setDataAndType(uri, "application/pdf");
+        } else if(url.toString().contains(".ppt") || url.toString().contains(".pptx")) {
+            // Powerpoint file
+            intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
+        } else if(url.toString().contains(".xls") || url.toString().contains(".xlsx")) {
+            // Excel file
+            intent.setDataAndType(uri, "application/vnd.ms-excel");
+        } else if(url.toString().contains(".zip") || url.toString().contains(".rar")) {
+            // WAV audio file
+            intent.setDataAndType(uri, "application/x-wav");
+        } else if(url.toString().contains(".rtf")) {
+            // RTF file
+            intent.setDataAndType(uri, "application/rtf");
+        } else if(url.toString().contains(".wav") || url.toString().contains(".mp3")) {
+            // WAV audio file
+            intent.setDataAndType(uri, "audio/x-wav");
+        } else if(url.toString().contains(".gif")) {
+            // GIF file
+            intent.setDataAndType(uri, "image/gif");
+        } else if(url.toString().contains(".jpg") || url.toString().contains(".jpeg") || url.toString().contains(".png")) {
+            // JPG file
+            intent.setDataAndType(uri, "image/jpeg");
+        } else if(url.toString().contains(".txt")) {
+            // Text file
+            intent.setDataAndType(uri, "text/plain");
+        } else if(url.toString().contains(".3gp") || url.toString().contains(".mpg") || url.toString().contains(".mpeg") || url.toString().contains(".mpe") || url.toString().contains(".mp4") || url.toString().contains(".avi")) {
+            // Video files
+            intent.setDataAndType(uri, "video/*");
+        } else {
+            //if you want you can also define the intent type for any other file
+
+            //additionally use else clause below, to manage other unknown extensions
+            //in this case, Android will show all applications installed on the device
+            //so you can choose which application to use
+            intent.setDataAndType(uri, "*/*");
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+    }
+
 
 }
