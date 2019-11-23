@@ -34,19 +34,20 @@ public class SensorService extends Service {
     public SensorService(Context applicationContext) {
         super();
     }
+    public SensorService(){}
 
-    public SensorService() {
-    }
+
+
 
     @Override
     public void onCreate() {
-        Log.i("OnCreate", "In OnCreate");
+        Log.i("ServiceStatus", "In OnCreate");
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("OnStart", "In OnStart");
+        Log.i("ServiceStatus", "In OnStart");
 
         //cut from onCreate to test
         MyRequestQueue = Volley.newRequestQueue(this);
@@ -76,7 +77,7 @@ public class SensorService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.i("OnDestroy", "Destroyed !");
+        Log.i("ServiceStatus", "Destroyed !");
         super.onDestroy();
         Intent broadcastIntent =
                 new Intent(getApplicationContext(), SensorRestarterBroadcastReceiver.class);
@@ -101,6 +102,7 @@ public class SensorService extends Service {
         timerTask =
                 new TimerTask() {
                     public void run() {
+                        Log.i("ServiceStatus","running");
                         groupslistfinal1[0] = new ArrayList<String>();
                         String groupname = "";
                         try {
@@ -216,13 +218,5 @@ public class SensorService extends Service {
         return null;
     }
 
-    @Override
-    public void onTaskRemoved(Intent intent) {
-        super.onDestroy();
-        Log.i("OnTaskRemoved", "ondestroy! in onTaskremoved");
-        Intent broadcastIntent =
-                new Intent(getApplicationContext(), SensorRestarterBroadcastReceiver.class);
-        sendBroadcast(broadcastIntent);
-        stoptimertask();
-    }
+
 }

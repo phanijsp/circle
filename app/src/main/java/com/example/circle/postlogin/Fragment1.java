@@ -159,12 +159,8 @@ public class Fragment1 extends Fragment {
                         } catch (Exception e) {
 
                         }
-                        // groupsAdapter = new GroupsAdapter(getActivity(), groupslist);
-                        //  groups_list.setAdapter(groupsAdapter);
+
                         groupsAdapter.notifyDataSetChanged();
-
-                        //   Toast.makeText(getActivity(), String.valueOf(groupid), Toast.LENGTH_SHORT).show();
-
                         handler.postDelayed(this, 2000);
                     }
                 };
@@ -243,35 +239,40 @@ public class Fragment1 extends Fragment {
                 if (++check[0] > 1) {
                     TextView textView = (TextView) view;
                     if (!textView.getText().equals("")) {
-//                        Toast.makeText(context, textView.getText(), Toast.LENGTH_SHORT).show();
                         String s = textView.getText().toString();
                         switch (s) {
                             case "New Message":
-                                if(!getadmin().equals("YES")){
-                                    Toast.makeText(context,"Only admin can perform this action",Toast.LENGTH_SHORT).show();
-                                }else{
+                                if (!getadmin().equals("YES")) {
+                                    Toast.makeText(context, "Only admin can perform this action", Toast.LENGTH_SHORT).show();
+                                } else {
                                     Intent k = new Intent(context, ListingAllGroups.class);
+                                    k.putExtra("key", "newmessage");
                                     startActivity(k);
                                     Toast.makeText(context, "New Msg", Toast.LENGTH_SHORT).show();
                                 }
 
                                 break;
                             case "Add Group":
-                                Toast.makeText(context,"Add Grp", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Add Grp", Toast.LENGTH_SHORT).show();
                                 break;
                             case "Delete Group":
-                                Toast.makeText(context,"Delete Grp",Toast.LENGTH_SHORT).show();
+                                if (!getadmin().equals("YES")) {
+                                    Toast.makeText(context, "Only admin can perform this action", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "Delete Grp", Toast.LENGTH_SHORT).show();
+                                    Intent k = new Intent(context, ListingAllGroups.class);
+                                    k.putExtra("key", "delete");
+                                    startActivity(k);
+                                }
                                 break;
                         }
                     }
                 }
-//        Toast.makeText(context,String.valueOf(check[0]),Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-//          Toast.makeText(context,customSpinner.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -281,11 +282,11 @@ public class Fragment1 extends Fragment {
     }
 
 
-    public void pushid(final int id) {
+    public void pushid2(final int id) {
         Log.i("huh", "I am in push id  groupid : " + String.valueOf(id) + " ? ");
 
         String url =
-                "http://93.188.165.250/php_files/getgroups2.php"; // <----enter your post url here
+                "http://93.188.165.250/php_files/getgroups3.php"; // <----enter your post url here
         StringRequest MyStringRequest =
                 new StringRequest(
                         Request.Method.POST,
@@ -316,6 +317,110 @@ public class Fragment1 extends Fragment {
                                                 String sStackTrace = stringWriter.toString();
                                             }
                                         }
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response
+                                .ErrorListener() { // Create an error listener to handle errors appropriately.
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
+
+                                // This code is executed if there is an error.
+                            }
+                        }) {
+                    protected Map<String, String> getParams() {
+                        Map<String, String> MyData = new HashMap<String, String>();
+
+                        MyData.put("domainname", getdomainname());
+                        MyData.put("admin", getadmin().toLowerCase());
+                        MyData.put("groupid", String.valueOf(id));
+
+                        return MyData;
+                    }
+                };
+
+        MyRequestQueue.add(MyStringRequest);
+        MyStringRequest.setRetryPolicy(
+                new DefaultRetryPolicy(
+                        15000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    }
+
+    public void pushid(final int id) {
+
+        final String query2 = "SELECT * FROM groups";
+        final Cursor cursor3 = sqLiteHelperGroups.getData(query2);
+        final ArrayList<String> gr1 = new ArrayList<String>();
+        final ArrayList<String> gr2 = new ArrayList<String>();
+        while (cursor3.moveToNext()) {
+            gr1.add(cursor3.getString(1));
+        }
+        Log.i("ingrouppush", gr1.toString());
+
+        Log.i("huh", "I am in push id  groupid : " + String.valueOf(id) + " ? ");
+
+        String url =
+                "http://93.188.165.250/php_files/getgroups3.php"; // <----enter your post url here
+        StringRequest MyStringRequest =
+                new StringRequest(
+                        Request.Method.POST,
+                        url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.i("response", response);
+                                try {
+
+                                    if (response.equals("error")) {
+
+                                    } else {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        JSONArray arr = null;
+                                        arr = jsonObject.getJSONArray("groupnames");
+                                        String group = "";
+                                        for (int i = 0; i < arr.length(); i++) {
+                                            JSONObject groupnames = arr.getJSONObject(i);
+                                            group = groupnames.getString("groupname");
+                                            gr2.add(groupnames.getString("groupname"));
+
+                                        }
+                                        ArrayList<String> gr2copy = new ArrayList<String>();
+                                        gr2copy.addAll(gr2);
+                                        gr2.removeAll(gr1);
+                                        ArrayList<String> newgroups = gr2;
+                                        gr1.removeAll(gr2copy);
+                                        ArrayList<String> delgroups = gr1;
+                                        Log.i("ingroup2", newgroups + "\n" + delgroups);
+                                        for (int i = 0; i < newgroups.size(); i++) {
+                                            try {
+                                                sqLiteHelperGroups.queryData(
+                                                        "INSERT INTO groups('groupname') VALUES('" + newgroups.get(i) + "')");
+                                            } catch (Exception e) {
+                                                StringWriter stringWriter = new StringWriter();
+                                                PrintWriter printWriter = new PrintWriter(stringWriter);
+                                                e.printStackTrace(printWriter);
+                                                String sStackTrace = stringWriter.toString();
+                                            }
+                                        }
+                                        for (int i = 0; i < delgroups.size(); i++) {
+                                            try {
+                                                sqLiteHelperGroups.queryData(
+                                                        "DELETE FROM groups WHERE groupname='" + delgroups.get(i) + "'");
+                                            } catch (Exception e) {
+                                                StringWriter stringWriter = new StringWriter();
+                                                PrintWriter printWriter = new PrintWriter(stringWriter);
+                                                e.printStackTrace(printWriter);
+                                                String sStackTrace = stringWriter.toString();
+                                                Log.i("sqliterror", sStackTrace);
+                                            }
+                                        }
+
                                     }
 
                                 } catch (JSONException e) {
@@ -396,4 +501,5 @@ public class Fragment1 extends Fragment {
         }
         return admin;
     }
+
 }

@@ -10,7 +10,7 @@ public class SensorRestarterBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(SensorRestarterBroadcastReceiver.class.getSimpleName(), "Service Stops! Oooooooooooooppppssssss!!!!");
+        Log.i("ServiceStatus", "Service Stops in broad ! Oooooooooooooppppssssss!!!!");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(new Intent(context, SensorService.class));
