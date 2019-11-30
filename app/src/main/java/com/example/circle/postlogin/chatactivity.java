@@ -502,12 +502,6 @@ public class chatactivity extends AppCompatActivity {
             }
         });
 
-        imageinfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         imagebackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -519,7 +513,11 @@ public class chatactivity extends AppCompatActivity {
         imageinfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(chatactivity.this,GroupInfoActivity.class);
+                i.putExtra("passoutyear",getIntent().getStringExtra("passoutyear"));
+                i.putExtra("branch",getIntent().getStringExtra("branch"));
+                startActivity(i);
             }
         });
     }

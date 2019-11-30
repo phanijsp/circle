@@ -176,6 +176,8 @@ public class Fragment1 extends Fragment {
                                 .show();
                         Intent i = new Intent(getActivity(), chatactivity.class);
                         i.putExtra("groupname", groups.getYear() + groups.getname());
+                        i.putExtra("branch",groups.getname());
+                        i.putExtra("passoutyear",groups.getYear());
                         messageidhelper.setMessageid(0);
                         startActivity(i);
                     }
@@ -253,7 +255,13 @@ public class Fragment1 extends Fragment {
 
                                 break;
                             case "Add Group":
-                                Toast.makeText(context, "Add Grp", Toast.LENGTH_SHORT).show();
+                                if(!getadmin().equals("YES")){
+                                    Toast.makeText(context,"Only admin can perform this action",Toast.LENGTH_SHORT).show();
+                                } else{
+                                    Toast.makeText(context, "Add Grp", Toast.LENGTH_SHORT).show();
+                                    Intent k = new Intent(context,AddGroupActivity.class);
+                                    startActivity(k);
+                                }
                                 break;
                             case "Delete Group":
                                 if (!getadmin().equals("YES")) {

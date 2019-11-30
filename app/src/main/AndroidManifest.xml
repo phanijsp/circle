@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.circle">
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".postlogin.SendMessageToMultipleGroups.Multiple_grps_sender"></activity>
+        <activity android:name=".postlogin.GroupInfoActivity"></activity>
+        <activity android:name=".postlogin.AddGroupActivity" />
+        <activity android:name=".postlogin.SendMessageToMultipleGroups.Multiple_grps_sender" />
         <activity android:name=".postlogin.SendMessageToMultipleGroups.ListingAllGroups" />
         <activity android:name=".ForgotPassword.forgotreset" />
         <activity android:name=".ForgotPassword.forgothelper" />
@@ -43,9 +50,5 @@
             android:name=".ayvarsservice.SensorService"
             android:enabled="true" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
